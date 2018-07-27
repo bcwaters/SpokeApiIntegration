@@ -30,7 +30,7 @@ function myFunction(){
     } 
     else {
         if (x.value == "") {
-            txt += "Select one or more files.";
+            txt += "Select image for your shoe";
         } else {
             txt += "The files property is not supported by your browser!";
             txt  += "<br>The path of the selected file: " + x.value; // If the browser does not support the files property, it will return the path of the selected file instead. 
@@ -102,7 +102,7 @@ function myFunction(){
       <h1>Pro Imaging Shoes</h1>
       <p>Custom designs printed on your shoes</p>
       <hr>
-      <h3> <img src="shoe.png" class="img-thumbnail" alt="Cinque Terre" width="304" height="236"></h3>
+      <h3> <img src="shoe.png" class="img-thumbnail" alt="Cinque Terre" ></h3>
       <h3>Product Details
 	  </h3>
 	  <p>•Low profile slip on shoe featuring canvas sides, rubber treads, elastic trim and padded insole. 
@@ -111,30 +111,40 @@ function myFunction(){
 			</p>
     </div>
 	
-    <div class="col-sm-4 sidenav" style="outline: 2px;">
-      <div class="well" style="height: 30%;">
-        <p>Select Size
+    <div class="col-sm-4 sidenav border" style="outline: 2px;">
+      <div class="well" style="height: 35%;">
+        <p style="align:left">Select Size:</p></br>
 			<select>
-				<option value="five">5</option>
-				<option value="six">6</option>
-				<option value="seven">7</option>
-				<option value="eight">8</option>
+			<option value="volvo">5</option>
+			<option value="volvo">6</option>
+			<option value="volvo">7</option>
+			<option value="volvo">8</option>
+			<option value="volvo">9</option>
+			<option value="volvo">10</option>
 			</select>
-			</p>
+			 <img src="smallshoe.png" class="img-thumbnail" alt="Cinque Terre" ></br>
+		
+		
       </div>
 	  
 	  <div class="well" style="height: 20%;">
-	  Upload Image<input type="file" id="myFile" multiple size="50" onchange="myFunction()">
-
-		<p id="demo"></p>
+	  <div class="input-group mb-3">
+  <div class="input-group-prepend">
+    <span class="input-group-text">Select an image for for you shoes</span>
+  </div>
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" id="inputGroupFile01">
+    <label class="custom-file-label" for="inputGroupFile01"></label>
+  </div>
+</div>
 	  </div>
       
 	  <div class="well" style="height: 20%;">
         <p>
 		  <form>
-			<div class="input-group">
+			<div class="input-group ">
 				<span class="input-group-addon">Qty:</span>
-				<input id="msg" type="text" class="form-control" name="msg">
+				<input id="msg" type="number" class="form-control" name="msg" style="width:80px;">
 			</div>
 			</form>
       </div>
