@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pro Imaging Shoes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
+<script>
+function myFunction(){
+    var x = document.getElementById("myFile");
+    var txt = "";
+    if ('files' in x) {
+        if (x.files.length == 0) {
+            txt = "Select one or more files.";
+        } else {
+            for (var i = 0; i < x.files.length; i++) {
+                txt += "<br><strong>" + (i+1) + ". file</strong><br>";
+                var file = x.files[i];
+                if ('name' in file) {
+                    txt += "name: " + file.name + "<br>";
+                }
+                if ('size' in file) {
+                    txt += "size: " + file.size + " bytes <br>";
+                }
+            }
+        }
+    } 
+    else {
+        if (x.value == "") {
+            txt += "Select one or more files.";
+        } else {
+            txt += "The files property is not supported by your browser!";
+            txt  += "<br>The path of the selected file: " + x.value; // If the browser does not support the files property, it will return the path of the selected file instead. 
+        }
+    }
+    document.getElementById("demo").innerHTML = txt;
+}
+</script>
+  <style>
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+	background-color: #008080;
+      margin-bottom: 0;
+      border-radius: 0;
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #008080;
+      color: white;
+      padding: 15px;
+    }
+	
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>                        
+      </button>
+      <a class="navbar-brand" href="#">Pro Imaging Shoes</a>
+    </div>
+    <div class="collapse navbar-collapse" id="myNavbar">
+      <ul class="nav navbar-nav">
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><span class="glyphicon glyphicon-log-in"></span> Checkout</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+  
+<div class="container-fluid text-center">    
+  <div class="row content">
+  
+    <div class="col-sm-6 text-left"> 
+      <h1>Pro Imaging Shoes</h1>
+      <p>Custom designs printed on your shoes</p>
+      <hr>
+      <h3> <img src="shoe.png" class="img-thumbnail" alt="Cinque Terre" width="304" height="236"></h3>
+      <h3>Product Details
+	  </h3>
+	  <p>•Low profile slip on shoe featuring canvas sides, rubber treads, elastic trim and padded insole. 
+			</br></br>•Size 6 men's/size 7 Women's
+			</br></br>•Sublimation printing process produces a high quality image that won't scratch, peel, or fade away over time
+			</p>
+    </div>
+	
+    <div class="col-sm-4 sidenav" style="outline: 2px;">
+      <div class="well" style="height: 30%;">
+        <p>Select Size
+			<select>
+				<option value="five">5</option>
+				<option value="six">6</option>
+				<option value="seven">7</option>
+				<option value="eight">8</option>
+			</select>
+			</p>
+      </div>
+	  
+	  <div class="well" style="height: 20%;">
+	  Upload Image<input type="file" id="myFile" multiple size="50" onchange="myFunction()">
+
+		<p id="demo"></p>
+	  </div>
+      
+	  <div class="well" style="height: 20%;">
+        <p>
+		  <form>
+			<div class="input-group">
+				<span class="input-group-addon">Qty:</span>
+				<input id="msg" type="text" class="form-control" name="msg">
+			</div>
+			</form>
+      </div>
+	  <div class="well"  style="height: 20%; vertical-align: bottom;" >
+	  <button type="button" class="btn btn-success">Checkout</button>
+	  </div>
+
+	  
+    </div>
+  </div>
+</div>
+
+<footer class="container-fluid text-center">
+  <p>Need suppport? Send us an email support@ProShoes.com</p>
+</footer>
+
+</body>
+</html>
