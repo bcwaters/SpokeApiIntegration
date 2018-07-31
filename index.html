@@ -110,21 +110,21 @@
 		
 		<div class="card-body">
 		<form>
-  <input type="radio" name="gender" value="male" checked> Male
-  <input type="radio" name="gender" value="female"> Female
+  <input onclick="selectGender('Male')" type="radio" name="gender" value="male" checked> Male
+  <input onclick="selectGender('Female')" type="radio" name="gender" value="female"> Female
 </form> 
-			<select>
-			<option value="volvo">5</option>
-			<option value="volvo">5.5</option>
-			<option value="volvo">6</option>
-			<option value="volvo">6.5</option>
-			<option value="volvo">7</option>
-			<option value="volvo">7.5</option>
-			<option value="volvo">8</option>
-			<option value="volvo">8.5</option>
-			<option value="volvo">9</option>
-			<option value="volvo">9.5</option>
-			<option value="volvo">10</option>
+			<select id="shoeSizeSelect" onchange="selectSize(this)">
+			<option value="5">5</option>
+			<option  value="5.5">5.5</option>
+			<option  value="6">6</option>
+			<option  value="6.5">6.5</option>
+			<option  value="7">7</option>
+			<option  value="7.5">7.5</option>
+			<option  value="8">8</option>
+			<option  value="8.5">8.5</option>
+			<option  value="9">9</option>
+			<option  value="9.5">9.5</option>
+			<option value="10">10</option>
 			</select>
 			 <img src="smallshoe.png" class="img-thumbnail" alt="Cinque Terre" ></br>
 		</div>
@@ -152,34 +152,75 @@
 		 <form>
 			<div class="input-group custom-form ">
 				<span class="input-group-text">Qty: </span>
-				<input id="qty" type="number" class="form-control" name="qty">
-				</DIV>
+				<input onchange="quantityPrice()" id="qty" type="number" class="form-control" name="qty" style="margin:0px;">
+
+
+				<span class="input-group-text">
+				<p style="background-color:white;"><div id="quantityprice">$0</div></p>
+				</DIV></span>
+
 			</div>
 			</form>
 		</div>
 		</div>
 	  <div class="card text-right"  style=" vertical-align: bottom;" >
 		<div class="card-body">
-			<a href="#" class="btn btn-success" style="align:left">Checkout</a>
+			<a href="#" onclick="checkout()" class="btn btn-success" style="align:left">Checkout</a>
 		</div>
 	   </div>
     </div>
   </div>
 </div>
 <footer class="footer">
-      <div class="container">
-        <span class="text-muted"> Contact support at help@inkedshoes.com</span>
+      <div class="container"><center>
+        <span class="text-muted"> Contact support at help@inkedshoes.com</span></center>
       </div>
 </footer>
    
-   <link rel="stylesheet" type="text/css" href="css/file-upload.css" />
-
-
-
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+	
+		<!--Developer Scripts     -->
+	<script>
+	var shoeGender = "Male"
+	var shoeSize = 5;
+	var orderQuantity=0;
+	var orderPrice = 0;
+	
+	function selectGender(selected){
+		shoeGender=selected;
+	}
+	
+	function selectSize(selectObject)
+	{
+		var newVal = selectObject.value;
+		shoeSize= newVal;
+	}
+	
+	
+	function quantityPrice(){
+		var qtyAmount= document.getElementById("qty").value;
+		if(qtyAmount<0)
+		{qtyAmount=0;
+		document.getElementById("qty").value="0";
+		};
+		
+		orderPrice = (qtyAmount *60)
+		document.getElementById("quantityprice").innerHTML = "$"+ orderPrice;
+		orderQuantity=qtyAmount;
+	
+	}
+	
+	function checkout(){
+	var testString = "Shoe Size: " + shoeGender + " " + shoeSize + "\n" + "Quantity: " + orderQuantity + "\nPrice: $" + orderPrice;
+		alert(testString);
+	}
+
+	</script>
+	
+	
   </body>
 </html>
