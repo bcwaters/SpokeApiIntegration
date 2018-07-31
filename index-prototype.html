@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Pro Imaging Shoes</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+ 
+  <style>
+	
+    /* Remove the navbar's default margin-bottom and rounded borders */ 
+    .navbar {
+	  background-color: #008080;
+
+    }
+    
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 450px}
+    
+    /* Set gray background color and 100% height */
+    .sidenav {
+      padding-top: 20px;
+      height: 100%;
+    }
+    
+    /* Set black background color, white text and some padding */
+    footer {
+      background-color: #008080;
+      color: white;
+      padding: 15px;
+    }
+	
+	.card-header{
+		background-color: ##D3D3D3;
+	}
+	
+	.card-body{
+		background-color: #D3D3D3;
+	}
+	
+    /* On small screens, set height to 'auto' for sidenav and grid */
+    @media screen and (max-width: 767px) {
+      .sidenav {
+        height: auto;
+        padding: 15px;
+      }
+      .row.content {height:auto;} 
+    }
+  </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-light ">
+  <a class="navbar-brand" href="#">Pro Imaging Shoes</a>
+</nav>
+
+<div class="container-fluid text-center">    
+  <div class="row content">
+    <div class="col-sm-4 text-left"> 
+      <div class="card">
+	  
+	  
+	  <div class="card-Title" >ProImaging Shoes</div>
+      <p>Custom designs printed on your shoes</p>
+      <hr>
+      <h3> <img src="shoe.png" class="img-thumbnail" alt="Cinque Terre" ></h3>
+      <h3>Product Details
+	  </h3>
+	  <p>•Low profile slip on shoe featuring canvas sides, rubber treads, elastic trim and padded insole. 
+			</br></br>•Size 6 men's/size 7 Women's
+			</br></br>•Sublimation printing process produces a high quality image that won't scratch, peel, or fade away over time
+			</p>
+		</div>
+    </div>
+	
+    <div class="col-sm-4 sidenav border" style="outline: 2px;">
+       
+	  <div class="card" style="height: 35%;">
+        <div class="card-header" >Select Size</div>
+		<div class="card-body">
+			<select>
+			<option value="volvo">5</option>
+			<option value="volvo">6</option>
+			<option value="volvo">7</option>
+			<option value="volvo">8</option>
+			<option value="volvo">9</option>
+			<option value="volvo">10</option>
+			</select>
+			 <img src="smallshoe.png" class="img-thumbnail" alt="Cinque Terre" ></br>
+		</div>
+      </div>
+	  
+	<div class="card" >
+	  <div class="card-header" >Select image for your shoes</div>
+	  <div class="card-body">
+	  <p>Download a template to create an image for your shoe<p>
+			<div class="custom-file">
+				<input type="file" class="custom-file-input" id="inputGroupFile01">
+				<label class="custom-file-label" for="inputGroupFile01"></label>
+			</div>
+	  </div>
+	 </div>
+      
+	  <div class="card" >
+	  <div class="card-header" >Select quanity</div>
+		<div class="card-body">
+		  <form>
+			<div class="input-group ">
+				<span class="input-group-addon">Qty:</span>
+				<input id="msg" type="number" class="form-control" name="msg" style="width:80px;">
+			</div>
+			</form>
+		</div>
+		</div>
+	  <div class="card"  style=" vertical-align: bottom;" >
+		<div class="card-body">
+			<a href="#" class="btn btn-success">Checkout</a>
+		</div>
+	   </div>
+	  
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+      <div class="container">
+        <span class="text-muted">Place sticky footer content here.</span>
+      </div>
+    </footer>
+
+</body>
+</html>
