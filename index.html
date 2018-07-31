@@ -44,6 +44,9 @@
 		width: 60px;
 	}
 	
+	.custom-file-input ~ .custom-file-label::after {
+    content: "";
+}
     /* On small screens, set height to 'auto' for sidenav and grid */
     @media screen and (max-width: 767px) {
       .sidenav {
@@ -123,22 +126,18 @@
 		</div>
       </div>
 	  
-	<div class="card" >
+	<div class="card text-left" >
 	  <div class="card-header" >Prepare an image for your shoes</div>
 	  <div class="card-body">
 	  <p>• First <a href="/images/myw3schoolsimage.jpg" Download>
   download
 </a> a template to create an image for your shoe<p>
-		<div class="input-group mb-3">
-  <div class="input-group-prepend">
-    <span class="input-group-text">Upload</span>
+
+<p> •Next upload the completed template</p>
+	 <div class="form-group">
+    <input type="file" class="form-control-file" id="exampleFormControlFile1">
   </div>
-  <div class="custom-file">
-    <input type="file" class="custom-file-input" id="inputGroupFile01">
-    <label class="custom-file-label" for="inputGroupFile01">Choose file</label>
-  </div>
-</div>
-	  </div>
+	 </div>
 	 </div>
       
 	  <div class="card" >
