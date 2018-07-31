@@ -9,10 +9,8 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
     <title>Custom shoes</title>
-	
 	 <style>
 	
-   
     /* Set gray background color and 100% height */
     .navbar {
       padding-top: 20px;
@@ -34,36 +32,40 @@
 		background-color: ##D3D3D3;
 	}
 	
-	#banner{
-		height: 200px;
-		width: 100%;
-		background: url(TempBanner.png) no-repeat center;
-	}
-	
 	#qty{
 		width: 80px;
 		flex:none;
 		margin:5px;
-		
 	}
 	
 	.custom-file-input ~ .custom-file-label::after {
     content: "";
 }
     /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: 767px) {
-      .sidenav {
-        height: auto;
-        padding: 15px;
-      }
-      .row.content {height:auto;} 
-    }
+   // Extra small devices (portrait phones, less than 576px)
+// No media query for `xs` since this is the default in Bootstrap
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) { max-width: 500px }
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { max-width: 600px }
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { max-width: 800px }
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { max-width: 800px }
 	
   </style>
   </head>
   <body>
-  
-<div class="container-fluid" id="banner">
+
+<div class="container">
+<div class="container" id="banner">
+	<div class="row">
+	<img class='img-fluid w-100' src="TempBanner.png" alt="Card image cap" style="border:1px solid grey;"> 
+	</div>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light">
@@ -82,19 +84,16 @@
       <li class="nav-item">
         <a class="nav-link" href="#">Pricing</a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link disabled" href="#">Disabled</a>
-      </li>
     </ul>
   </div>
 </nav>
 
 
-<div class="container-fluid text-center">  
+<div class="container-fluid ">  
   <div class="row content ">
     <div class="col-sm-6 text-left""> <br><br>
     	  <center>
-	   <img src="shoe.png" alt="Card image cap" style="border:1px solid grey; margin:3px;"> </center> <br>
+	   <img src="shoe.png" alt="Card image cap" style="max-width: 100%; height: auto; border:1px solid grey; margin:3px;"> </center> <br>
 	  
       <h3>Product Details
 	  </h3>
@@ -104,7 +103,7 @@
 			</p>
 		</div>
  
-      <div class="col-sm-4 sidenav border" style="outline: 2px;">
+      <div class="col-sm-6 border" style="outline: 2px;">
       <div class="card">
         <div class="card-header" >Select Size</div>
 		
@@ -176,6 +175,7 @@
         <span class="text-muted"> Contact support at help@inkedshoes.com</span></center>
       </div>
 </footer>
+</div>
    
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
