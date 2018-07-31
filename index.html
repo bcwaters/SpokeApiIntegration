@@ -41,7 +41,10 @@
 	}
 	
 	#qty{
-		width: 60px;
+		width: 80px;
+		flex:none;
+		margin:5px;
+		
 	}
 	
 	.custom-file-input ~ .custom-file-label::after {
@@ -55,6 +58,7 @@
       }
       .row.content {height:auto;} 
     }
+	
   </style>
   </head>
   <body>
@@ -143,11 +147,13 @@
 	  <div class="card" >
 	  <div class="card-header" >Select quanity</div>
 		<div class="card-body">
-		  <form>
-			<div class="input-group ">
-				<span class="input-group-addon">Qty:</span>
+			 <div class="col-xs-2">
+    
+		 <form>
+			<div class="input-group custom-form ">
+				<span class="input-group-text">Qty: </span>
 				<input id="qty" type="number" class="form-control" name="qty">
-				
+				</DIV>
 			</div>
 			</form>
 		</div>
