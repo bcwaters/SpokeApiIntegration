@@ -151,10 +151,10 @@
 				<div class="col-xs-2">
 				<form>
 					<div class="input-group custom-form ">
-						<span class="input-group-text">Qty: </span>
-						<input onchange="quantityPrice()" id="qty" type="number" class="form-control" name="qty" style="margin:0px;">
-							<span class="input-group-text">
-							<p style="background-color:white;"><div id="quantityprice">$0</div></p>
+						<span class="input-group-text" style="background-color:#BCBCBC; font-weight:bold;">Quantity: </span>
+						<input onkeypress="return event.keyCode != 13;" onchange="quantityPrice()" id="qty" type="number" class="form-control" name="qty" style="margin:0px;">
+							<span class="input-group-text" style="background-color:white; border:0;">
+							<p style="background-color:white; border:0;"><div id="quantityprice" >Price: $0</div></p>
 						</span>
 					</div>
 				</form>
@@ -207,8 +207,16 @@
 		document.getElementById("qty").value="0";
 		};
 		
+		if(qtyAmount>50)
+		{
+			qtyAmount=0;
+			document.getElementById("qty").value="0";
+			alert("Quantity cannot be greater than 50, please contact us directly.");
+			
+		}
+		
 		orderPrice = (qtyAmount *60)
-		document.getElementById("quantityprice").innerHTML = "$"+ orderPrice;
+		document.getElementById("quantityprice").innerHTML = "Price: $"+ orderPrice;
 		orderQuantity=qtyAmount;
 	
 	}
