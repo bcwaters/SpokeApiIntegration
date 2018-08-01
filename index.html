@@ -30,7 +30,7 @@
 	.card-header{
 		background-color: #349B7C;
 		height: 35px;
-		padding: 1px;
+		padding: 5px 10px 2px;
 	}
 	
 	#qty{
@@ -62,7 +62,7 @@
   </head>
   <body style="background-color: #B1E6E6;" >
 
-<div class="container border py-0 shadow" style="background-color: white; padding:0px;" >
+<div class="container border shadow py-0" style="background-color: white; padding:0px;" >
 <div class="container" id="banner">
 	<div class="row">
 	<img class='img-fluid w-100' src="TempBanner.png" alt="Card image cap"> 
@@ -89,7 +89,7 @@
 </nav>
 
 
-<div class="container-fluid ">  
+<div class="container ">  
   <div class="row content ">
     <div class="col-sm-6 text-left""> <br><br>
     	  <center>
@@ -105,14 +105,15 @@
  
       <div class="col-sm-6 border" style="outline: 2px;">
       <div class="card">
-        <div class="card-header">Select Size</div>
+        <div class="card-header"><img src="Square1.png" style="padding:0px;"> Select Size</div>
 		
 		<div class="card-body">
 		<form>
-  <input onclick="selectGender('Male')" type="radio" name="gender" value="male" checked> Male
-  <input onclick="selectGender('Female')" type="radio" name="gender" value="female"> Female
-</form> 
-			<select id="shoeSizeSelect" onchange="selectSize(this)">
+			<input onclick="selectGender('Male')" type="radio" name="gender" value="male" checked> Male
+			<input onclick="selectGender('Female')" type="radio" name="gender" value="female"> Female
+		</form> 
+		
+		<select id="shoeSizeSelect" onchange="selectSize(this)">
 			<option value="5">5</option>
 			<option  value="5.5">5.5</option>
 			<option  value="6">6</option>
@@ -124,51 +125,50 @@
 			<option  value="9">9</option>
 			<option  value="9.5">9.5</option>
 			<option value="10">10</option>
-			</select>
-			 <img src="smallshoe.png" class="img-thumbnail" alt="Cinque Terre" ></br>
+		</select>
+			 
+		<img src="smallshoe.png" class="img-thumbnail" alt="Cinque Terre" ></br>
 		</div>
+		
       </div>
 	  
 	<div class="card text-left" >
-	  <div class="card-header" >Prepare an image for your shoes</div>
+	  <div class="card-header" ><img src="Square2.png" style="padding:0px;"> Prepare an image for your shoes</div>
 	  <div class="card-body">
-	  <p>• First <a href="/images/myw3schoolsimage.jpg" Download>
-  download
-</a> a template to create an image for your shoe<p>
+	  <p>• First <a href="/images/myw3schoolsimage.jpg" Download> download </a> a template to create an image for your shoe
+	  </p>
 
-<p> • Next upload the completed template</p>
+	  <p> • Next upload the completed template</p>
 	 <div class="form-group">
-    <input type="file" class="form-control-file" id="exampleFormControlFile1">
-  </div>
+		<input type="file" class="form-control-file" id="exampleFormControlFile1">
 	 </div>
 	 </div>
+	</div>
       
 	  <div class="card" >
-	  <div class="card-header" >Select quanity</div>
+	  <div class="card-header" ><img src="Square3.png" style="padding:0px;"> Select quanity</div>
 		<div class="card-body">
-			 <div class="col-xs-2">
-    
-		 <form>
-			<div class="input-group custom-form ">
-				<span class="input-group-text">Qty: </span>
-				<input onchange="quantityPrice()" id="qty" type="number" class="form-control" name="qty" style="margin:0px;">
-
-
-				<span class="input-group-text">
-				<p style="background-color:white;"><div id="quantityprice">$0</div></p>
-				</DIV></span>
-
+			<div class="row content">
+				<div class="col-xs-2">
+				<form>
+					<div class="input-group custom-form ">
+						<span class="input-group-text">Qty: </span>
+						<input onchange="quantityPrice()" id="qty" type="number" class="form-control" name="qty" style="margin:0px;">
+							<span class="input-group-text">
+							<p style="background-color:white;"><div id="quantityprice">$0</div></p>
+						</span>
+					</div>
+				</form>
+				</div>
+				
+				<div class="col-sm">
+					<a href="#" onclick="checkout()" class="btn btn-success float-right" style="align:left">Checkout</a>
+				</div>
 			</div>
-			</form>
 		</div>
-		</div>
-	  <div class="card text-right"  style=" vertical-align: bottom;" >
-		<div class="card-body">
-			<a href="#" onclick="checkout()" class="btn btn-success" style="align:left">Checkout</a>
-		</div>
-	   </div>
     </div>
   </div>
+</div>
 </div>
 <footer class="footer">
       <div class="container"><center>
