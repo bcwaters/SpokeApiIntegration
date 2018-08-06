@@ -20,6 +20,7 @@
     	
     /* Set black background color, white text and some padding */
     footer {
+	  position:relative;
       background: linear-gradient(#52B396, #4CA6A6);
       min-height: 40px; 
     }
@@ -35,10 +36,25 @@
 		font-family: Verdana;
 	}
 	
+	.nav-item:hover{
+		background: #349B7C;
+		border: 0px solid #4CA6A6;
+		border-radius: 0px 0px 10px 10px;
+	}
+	
 	#qty{
 		width: 80px;
 		flex:none;
 		margin:5px;
+	}
+	
+	.footerText{
+		position:absolute;
+		bottom:4px;	
+		left:0;
+		right:0;
+		margin-left:auto;
+		margin-right:auto;
 	}
 	
 	.custom-file-input ~ .custom-file-label::after {
@@ -100,9 +116,9 @@
 			</br></br>• Size 6 men's/size 7 Women's
 			</br></br>• Sublimation printing process produces a high quality image that won't scratch, peel, or fade away over time
 			</p>
-		</div>
+	</div>
  
-      <div class="col-sm-6 border" style="outline: 2px;">
+    <div class="col-sm-6 border" style="outline: 2px;">
       <div class="card">
         <div class="card-header"><img src="Square1.png" style="padding:0px 0px 5px 0px;">	&#160; Select Size</div>
 		
@@ -128,24 +144,23 @@
 			 
 		<img src="smallshoe.png" class="img-thumbnail" alt="Cinque Terre" ></br>
 		</div>
-		
       </div>
 	  
-	<div class="card text-left" >
-	  <div class="card-header" ><img src="Square2.png" style="padding:0px 0px 5px 0px;"> 		&#160; Prepare an image for your shoes</div>
-	  <div class="card-body">
-	  <p>• First <a href="/images/myw3schoolsimage.jpg" Download> download </a> a template to create an image for your shoe
-	  </p>
-
-	  <p> • Next upload the completed template</p>
-	 <div class="form-group">
-		<input type="file" class="form-control-file" id="exampleFormControlFile1">
-	 </div>
-	 </div>
-	</div>
+	  <div class="card text-left" >
+		<div class="card-header" ><img src="Square2.png" style="padding:0px 0px 5px 0px;"> 		&#160; Prepare an image for your shoes</div>
+		<div class="card-body">
+			<p>• First <a href="/templateFile" Download> download </a> a template to create an image for your shoe
+			</p>
+			<p> • Double check that the template meets <a href="/Artwork_Requirements.pdf" >requirements</a></p>
+			<p> • Now upload your completed image</p>
+		<div class="form-group">
+			<input type="file" class="form-control-file" id="exampleFormControlFile1">
+		</div>
+		</div>
+	  </div>
       
 	  <div class="card" >
-	  <div class="card-header" ><img src="Square3.png" style="padding:0px 0px 5px 0px;"> 	&#160; Select quanity</div>
+		<div class="card-header" ><img src="Square3.png" style="padding:0px 0px 5px 0px;"> 	&#160; Select quanity</div>
 		<div class="card-body">
 			<div class="row content">
 				<div class="col-xs-2">
@@ -165,24 +180,24 @@
 				</div>
 			</div>
 		</div>
-    </div>
+      </div>
+	</div>
   </div>
 </div>
-</div>
+
 <footer class="footer">
-      <div class="container"><center>
-        <span > Contact support at help@inkedshoes.com</span></center>
+      <div class="container"><center><div class="footerText">
+       Contact support at help@inkedshoes.com</center></div>
       </div>
 </footer>
 </div>
-   
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	
-		<!--Developer Scripts     -->
+		<!--Developer Scripts-->
 	<script>
 	var shoeGender = "Male"
 	var shoeSize = 5;
@@ -199,7 +214,6 @@
 		shoeSize= newVal;
 	}
 	
-	
 	function quantityPrice(){
 		var qtyAmount= document.getElementById("qty").value;
 		if(qtyAmount<0)
@@ -211,23 +225,17 @@
 		{
 			qtyAmount=0;
 			document.getElementById("qty").value="0";
-			alert("Quantity cannot be greater than 50, please contact us directly.");
-			
+			alert("Quantity cannot be greater than 50, please contact us directly.");	
 		}
-		
 		orderPrice = (qtyAmount *60)
 		document.getElementById("quantityprice").innerHTML = "Price: $"+ orderPrice;
 		orderQuantity=qtyAmount;
-	
 	}
 	
 	function checkout(){
 	var testString = "Shoe Size: " + shoeGender + " " + shoeSize + "\n" + "Quantity: " + orderQuantity + "\nPrice: $" + orderPrice;
 		alert(testString);
 	}
-
-	</script>
-	
-	
+	</script>	
   </body>
 </html>
