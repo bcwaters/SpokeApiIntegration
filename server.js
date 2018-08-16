@@ -18,6 +18,7 @@ const client = new pg.Client({
   ssl: !isLocal,
 });
 
+if(isLocal){
 client.connect();
 client.query('SELECT * FROM product;', (err, res) => {
   if (err) throw err;
@@ -26,7 +27,7 @@ client.query('SELECT * FROM product;', (err, res) => {
   }
   client.end();
 });
-  
+}
 
 app.use(express.static(__dirname + '/public'));
 
