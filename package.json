@@ -9,6 +9,7 @@
   "author": "Brent Waters",
   "license": "ISC",
   "dependencies": {
-    "express": "^4.16.3"
+    "express": "^4.16.3",
+    "handlebars": "^4.0.11"
   }
 }
