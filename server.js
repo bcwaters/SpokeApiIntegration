@@ -21,8 +21,6 @@ const client = new pg.Client({
 client.connect();
 var testString;
 
-
-
 var finalPageHTML = compileTemplate(data);
 
 
