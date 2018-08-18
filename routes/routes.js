@@ -9,9 +9,8 @@ router.get('/', (req, res) =>
 		)
 	)
 
-	
+//add middleware to send database request	
 router.use("/ProductView.html", db.getProduct);
-
 router.get('/ProductView.html', (req, res) => 
 	res.send(renderPage('./ProductView.html', './ProImagingTemplate.json', res.dbResult[0]))
 	)
