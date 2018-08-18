@@ -9,6 +9,13 @@ router.get('/', (req, res) =>
 		)
 	)
 
+	
+router.use("/ProductView.html", db.getProduct);
+
+router.get('/ProductView.html', (req, res) => 
+	res.send(renderPage('./ProductView.html', './ProImagingTemplate.json', res.dbResult[0]))
+	)
+	
 router.get('/api/products', db.getAllProducts)
 
 function joinJSON(obj1, obj2)
@@ -20,16 +27,14 @@ function joinJSON(obj1, obj2)
 	return result;
 }
 
-function renderPage(templateURI, JSON_uri )
+function renderPage(templateURI, JSON_uri, JSON_retrieved )
 {
 	var template = fs.readFileSync(templateURI, "utf8");
 	var data = JSON.parse(fs.readFileSync(JSON_uri))
 	var compileTemplate = handlebars.compile(template);
-	var finalPageHTML = compileTemplate(data);
+	var finalPageHTML = compileTemplate(joinJSON(data, JSON_retrieved));
 	
 	return finalPageHTML;
 }
-
-
 
 module.exports = router;

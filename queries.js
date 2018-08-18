@@ -21,6 +21,20 @@ function getAllProducts(req, res, next) {
     });
 }
 
+function getProduct(req, res, next) {
+  db.any('select * from product')
+    .then(function (data) {
+		
+			res.dbResult = data;
+			next();
+		})
+    .catch(function (err) {
+      return next(err);
+    });
+}
+
+
 module.exports = {
   getAllProducts: getAllProducts,
+  getProduct: getProduct
 };
