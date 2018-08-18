@@ -23,5 +23,4 @@ function getAllProducts(req, res, next) {
 
 module.exports = {
   getAllProducts: getAllProducts,
-  testQuery: testQuery
 };
