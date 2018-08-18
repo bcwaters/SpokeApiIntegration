@@ -6,7 +6,7 @@ const db = pgp(
 );
 
 // add query functions
-function getAllProducts(req, res, next) {
+function apiAllProducts(req, res, next) {
   db.any('select * from product')
     .then(function (data) {
       res.status(200)
@@ -21,7 +21,7 @@ function getAllProducts(req, res, next) {
     });
 }
 
-function getProduct(req, res, next) {
+function getProductData(req, res, next) {
   db.any('select * from product')
     .then(function (data) {
 		
@@ -35,6 +35,6 @@ function getProduct(req, res, next) {
 
 
 module.exports = {
-  getAllProducts: getAllProducts,
-  getProduct: getProduct
+  apiAllProducts: apiAllProducts,
+  getProductData: getProductData
 };

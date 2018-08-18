@@ -3,36 +3,31 @@ var router = express.Router();
 var db = require('../queries');
 const handlebars = require('handlebars')
 const fs = require("fs")
-
+var brandingData = require('../helperFunctions/loadDefaultJSON')
+							
 router.get('/', (req, res) => 
-		res.send(renderPage('./index.html', './ProImagingTemplate.json')
+		res.send(renderPage('./index.html', brandingData)
 		)
 	)
 
 //add middleware to send database request	
-router.use("/ProductView.html", db.getProduct);
+router.use("/ProductView.html", db.getProductData);
 router.get('/ProductView.html', (req, res) => 
-	res.send(renderPage('./ProductView.html', './ProImagingTemplate.json', res.dbResult[0]))
+	res.send(renderPage('./ProductView.html', brandingData, res.dbResult[0]))
 	)
 	
-router.get('/api/products', db.getAllProducts)
+router.get('/api/products', db.apiAllProducts)
 
-function joinJSON(obj1, obj2)
-{
-	var result = {}
-	for(var key in obj1) result[key] = obj1[key];
-	for(var key in obj2) result[key] = obj2[key];
-	
-	return result;
-}
-
-function renderPage(templateURI, JSON_uri, JSON_retrieved )
+function renderPage(templateURI, currentJSON, JSON_retrieved )
 {
 	var template = fs.readFileSync(templateURI, "utf8");
-	var data = JSON.parse(fs.readFileSync(JSON_uri))
+	var data = currentJSON;
+	for(var key in JSON_retrieved)
+	{
+			data[key] = JSON_retrieved[key]
+	}
 	var compileTemplate = handlebars.compile(template);
-	var finalPageHTML = compileTemplate(joinJSON(data, JSON_retrieved));
-	
+	var finalPageHTML = compileTemplate(data);
 	return finalPageHTML;
 }
 
