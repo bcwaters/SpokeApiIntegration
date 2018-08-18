@@ -1,9 +1,6 @@
 {
 	"bannerImage" : "fillerBanner.png",
 	"navbarBrand" : "BRAND",
-	"productTitle" : "Product Title",
-	"productImage" : "shoe.png",
-	"productDescription" : " • Product description goes here <br><br> • and here <br><br> • and here",
 	"step1" : "  Select Size",
 	"step2" : "  Prepare an image for your shoes",
 	"step3" : "  Select quantity",

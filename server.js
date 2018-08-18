@@ -2,13 +2,9 @@ require('dotenv').config()
 const express = require('express')
 const app = express()
 const path = require("path")
-const handlebars = require('handlebars')
-const fs = require("fs")
 const pg = require("pg")
-
-var template = fs.readFileSync('./ProductView.html', "utf8");
-var data = JSON.parse(fs.readFileSync("./ProImagingTemplate.json"))
-var compileTemplate = handlebars.compile(template);
+var dba = require("./queries")
+var routes = require('./routes/routes');
 
 
 
@@ -19,26 +15,9 @@ const client = new pg.Client({
 });
 
 client.connect();
-var testString;
-
-var finalPageHTML = compileTemplate(data);
-
+app.use('/', routes);
 
 app.use(express.static(__dirname + '/public'));
-
-app.get('/', (req, res) => 
-res.send(finalPageHTML))
-
-
-app.get('/test', (req, res, next) => {
-	client.query('SELECT * FROM product;', (err, result) => {
-    if (err) {
-      return next(err)
-    }
-    res.send(result.rows[0])
-	})
-});
-
 
 
 var server = app.listen(process.env.PORT || 8080, function () {
