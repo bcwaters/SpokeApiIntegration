@@ -7,7 +7,6 @@ fs.readdirSync('./templateData/').forEach(file => {
 
 function joinJSON(objArray)
 {
-	console.log(loadedJSON)
 	var result = {}
 	
 	for(var objKey in objArray){
@@ -16,9 +15,7 @@ function joinJSON(objArray)
 		 result[key] = currentArray[key];
 		}
 	}
-	
 	return result;
 }
-
 
 module.exports = joinJSON(loadedJSON);
