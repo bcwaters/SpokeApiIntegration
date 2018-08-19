@@ -3,8 +3,11 @@ var router = express.Router();
 var db = require('../queries');
 const handlebars = require('handlebars')
 const fs = require("fs")
+
 var brandingData = require('../helperFunctions/loadDefaultJSON')
-							
+var componentData = require('../helperFunctions/loadComponentData')
+
+router.use('/', db.getFeaturedItems)							
 router.get('/', (req, res) => 
 		res.send(renderPage('./index.html', brandingData)
 		)
@@ -26,9 +29,23 @@ function renderPage(templateURI, currentJSON, JSON_retrieved )
 	{
 			data[key] = JSON_retrieved[key]
 	}
+	//THIS NEEDS TO BE FIXED SO THAT PARTIALS ARE REGISTERED ONLY ONCE
+	registerPartials();
 	var compileTemplate = handlebars.compile(template);
-	var finalPageHTML = compileTemplate(data);
+	var finalPageHTML = compileTemplate(componentData);
+	finalPageHTML = compileTemplate(data);
 	return finalPageHTML;
 }
+
+function registerPartials()
+{
+	for(partial in componentData)
+	{
+		handlebars.registerPartial(partial, componentData[partial])
+	}
+	
+}
+
+
 
 module.exports = router;

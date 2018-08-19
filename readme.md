@@ -1,6 +1,9 @@
-Simple eCommerce boilerplate
+Simple eCommerce site 
+
 	-Node Express Server
-	-templated with handlebars
+	-handlebars
 	-utilizes bootstrap
+	-PostgreSQL
+	-Heroku can deploy directly from the repo
 	
  [Example Site](https://customshoes.herokuapp.com/)

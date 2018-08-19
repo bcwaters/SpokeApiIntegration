@@ -22,9 +22,16 @@ function apiAllProducts(req, res, next) {
 }
 
 function getProductData(req, res, next) {
-  db.any('select * from product')
+	var query = req._parsedUrl['query'];
+	var dbQuery = ''
+	if(query)
+	{
+		query = query.split("=");
+		dbQuery = ' WHERE ' + query[0] + ' = \'' + query[1] + "\'"
+	}
+  db.any('select * from product'+ dbQuery)
     .then(function (data) {
-		
+			if(!data[0]){data=[{'product_name':'not_found', 'product_description':'no item found'}]}
 			res.dbResult = data;
 			next();
 		})
@@ -33,8 +40,15 @@ function getProductData(req, res, next) {
     });
 }
 
+function getFeaturedItems(req, res, next) {
+ 
+   next();
+}
+
+
 
 module.exports = {
   apiAllProducts: apiAllProducts,
-  getProductData: getProductData
+  getProductData: getProductData,
+  getFeaturedItems: getFeaturedItems
 };

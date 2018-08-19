@@ -26,10 +26,22 @@
 	
 	.nav-item:hover{
 		background: #4CA6A6;
-		border: 5px solid #4CA6A6;
-		border-radius: 0px 0px 10px 10px;
+		border: 0px solid #4CA6A6;
+		border-radius: 0px 0px 20px 20px;
 	}
 	
+	.navbar-brand:hover{
+		background: #349B7C;
+		border: 0px solid #4CA6A6;
+		border-radius: 0px 0px 20px 20px;
+	}
+	.dropdown:hover > .dropdown-menu {
+    display: block;
+	}
+	.dropdown > .dropdown-toggle:active {
+    /*Without this, clicking will make it sticky*/
+    pointer-events: none;
+	}
 	.navbar-nav .nav-link{
 		padding:1.5rem 1rem;
 		font-size:1.5rem;

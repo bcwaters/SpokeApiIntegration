@@ -16,7 +16,6 @@ const client = new pg.Client({
 
 client.connect();
 app.use('/', routes);
-
 app.use(express.static(__dirname + '/public'));
 
 

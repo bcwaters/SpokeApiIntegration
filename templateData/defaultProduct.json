@@ -1,7 +1,8 @@
 {
-	"product_name" : "DEFAULT",	
-	"product_image" : "shoe.png",	
-	"product_description" : " • Product description goes here <br><br> • and here <br><br> • and here",	
+	"product_name" : "ITEM NOT FOUND",	
+	"product_image" : "noItem.png",	
+	"product_description" : "REQUESTED ITEM DOES NOT EXIST",	
+	"product_category" : "clothing",
 	"step1" : "  Select Size",		
 	"step2" : "  Prepare an image for your shoes",		
 	"step3" : "  Select quantity"
