@@ -3,7 +3,7 @@
     .navbar {
 	  min-height: 80px; 
 	  background-color: #4CA6A6;
-	  background: linear-gradient(#4CA6A6, #52B396)
+	  background: linear-gradient(#4CA6A6, #96B396)
     }
     	
     /* Set black background color, white text and some padding */
@@ -25,13 +25,13 @@
 	}
 	
 	.nav-item:hover{
-		background: #4CA6A6;
+		background: linear-gradient(#96B396, #4CA6A6);
 		border: 0px solid #4CA6A6;
 		border-radius: 0px 0px 20px 20px;
 	}
 	
 	.navbar-brand:hover{
-		background: #349B7C;
+		background: linear-gradient(#96B396, #4CA6A6);
 		border: 0px solid #4CA6A6;
 		border-radius: 0px 0px 20px 20px;
 	}
