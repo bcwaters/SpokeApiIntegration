@@ -1,0 +1,17 @@
+{{#if_eq @key 'products'}}
+{{#each this}}
+<a class="cardlink" href="{{productUrl product_name}}">
+			<div class="card preview-card text-dark">
+				<div class="card-body preview-card">
+					<div class='img-div'>
+					 <img class="card-img-top" src={{product_image}} alt="shoe">
+					 </div>
+					<p class="card-text product-name text-center">{{product_name}}</p>
+					
+				</div>
+				  <div class="card-footer product-price bg-transparent text-right">$50</div>
+			</div>
+</a>
+{{/each}}
+{{/if_eq}}
+

@@ -40,8 +40,8 @@ function getProductData(req, res, next) {
     });
 }
 
-function getFeaturedItems(req, res, next) {
- 
+function getFeaturedProducts(req, res, next) {
+	res.products = [{'product_name':'shoe', 'product_image':"shoe.png"},{'product_name':'toy','product_image':"toy.png"},{'product_name':'tattoo','product_image':"tattoo.png"}]
    next();
 }
 
@@ -50,5 +50,5 @@ function getFeaturedItems(req, res, next) {
 module.exports = {
   apiAllProducts: apiAllProducts,
   getProductData: getProductData,
-  getFeaturedItems: getFeaturedItems
+  getFeaturedProducts: getFeaturedProducts
 };

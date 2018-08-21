@@ -9,8 +9,9 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	
 	 <link rel="stylesheet" type="text/css" href="/css/main.css">
+	 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
 
-    <title>Custom shoes</title>
+    <title>General Store</title>
   </head>
   <body >
 
@@ -25,7 +26,12 @@
 
 
 <div class="container ">  
-<a href="ProductView.html?product_name=shoe"> Current product </a>
+	<div class="row d-flex ">
+	{{#each this}}
+		{{> previewCard }}
+	{{/each}}
+	</div>
+	
 </div>
 
 <footer class="footer">
