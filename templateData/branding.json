@@ -1,7 +1,8 @@
 {
+	"brandTitle" : "Generic Shopper",
 	"bannerImage" : "fillerBanner.png",
 	"navbarBrand" : "cart.png",
 	"footerMessage" : "footer message",
-	"Login":"Login"
+	"Login":"login"
 	
 }

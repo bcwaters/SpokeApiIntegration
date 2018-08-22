@@ -1,19 +1,43 @@
 <div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
-
-        <div class="modal-content">
-		      <button type="button" class="close text-right" style="padding:5px; margin-right:10px;" data-dismiss="modal">&times; </button>
-			  	 <br>
+        <div class="modal-content login">
+			<div class="container">
+				<div class="row content ">
+				 <div class="col-sm-9" >
+					<img class="loginIcon" src={{navbarBrand}}>
+				 </div>
+					<div class="col text-right " >
+						<button type="button" class="close text-right" style="padding:5px; margin-right:10px;" data-dismiss="modal">&times; </button>
+					</div>
+				</div>
+			</div>
+			  	
              <form action="/login" method="post" onsubmit="document.getElementById('hiddenURL').value = window.location.href">
 	  <input type="hidden" name="currentUrl" id="hiddenURL" value="asdf">
-        <label>Username:</label>
-        <input type="text" name="username"/>
-		<br>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-  
-            <div class="modal-footer d-flex justify-content-center">
-                <input type="submit" value="Log In"/> {{#if_eq Login 'login'}} <div>failed!</div>{{/if_eq}}
+		<div class="container" style="padding-top=10px;">
+		<div class="row content ">
+			<div class="col-sm-2 " >
+				<label>Username:</label>
+			</div>
+			<div class="col-sm-2" style="margin-left: 50px;" >
+				<input type="text" name="username"/>
+			</div>
+		</div>
+		<div class = "row content ">
+			<div class="col-sm-2 " >
+				<label>Password:</label>
+			</div>
+			<div class="col-sm-2" style="margin-left: 50px;" >
+				<input type="password" name="password"/>
+			</div>
+		</div>
+		<div class="row content">
+		
+			<div class="col"><a href="/register.html">Sign up</a></div>
+		</div>	
+		</div>
+            <div class="modal-footer d-flex justify-content-center" style="border:none;">
+                <input type="submit" value="Log In"/> {{#if_eq Login 'failed'}} <div>login failed!</div>{{/if_eq}}
             </div>
 			</form>
         </div>
@@ -21,7 +45,10 @@
 </div>
 <div class="text-center">
 	{{#if_eq Login 'login'}}
-    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">{{Login}}</a>{{/if_eq}}
-	{{#if_not Login 'login'}}welcome {{Login}}<div><a href="/logout">sign out</a></div>{{/if_not}}
+    <a href="" class="btn login btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm"><div class = loginText>login </div></a>{{/if_eq}}
+	{{#if_eq Login 'failed'}}
+	   <a href="" class="btn login btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm"><div class = loginText>login </div></a>
+	{{/if_eq}}
+	{{#if_not Login 'login'}}{{#if_not Login 'failed'}}welcome {{Login}}<div><a href="/logout">sign out</a></div>{{/if_not}}{{/if_not}}
 </div>
 

@@ -4,6 +4,32 @@
 	  background-color: #4CA6A6;
 	  background: linear-gradient(#4CA6A6, #96B396)
     }
+	
+	.loginText{
+		color:black;
+		opacity:1;
+		
+	}
+	
+	.modal-content.login{
+		 background-color: #4CA6A6;
+			background: linear-gradient(#4CA6A6, #96B396)
+	}
+	
+	.btn.login{
+		margin-top:20px;
+		    border: solid;
+			color: #99f1ff;
+			opacity: .4;
+			background-color:#99f1ff;;
+	}
+	
+	.signup{
+		position:absolute;
+		width:100%;
+		bottom:0;
+		text-align:left;
+	}
     	
     .footer {
 	  position:relative;
@@ -51,6 +77,19 @@
 		width:100%;
 		height:150px;
 	
+	}
+	
+	.loginIcon{
+		width:auto;
+		max-height:90%;
+		display:block;
+		margin-left: auto;
+		padding-right:9%;
+	
+		margin-top: 0px;
+		display: flex;
+		overflow: hidden;
+		
 	}
 	
 	.card-img-top{

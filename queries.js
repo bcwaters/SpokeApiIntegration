@@ -64,8 +64,6 @@ function getFeaturedProducts(req, res, next) {
    next();
 }
 
-
-
 module.exports = {
   apiAllProducts: apiAllProducts,
   getProductData: getProductData,

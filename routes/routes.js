@@ -11,7 +11,6 @@ const url = require('url')
 var session = require("express-session"),
     bodyParser = require("body-parser");
 	
-	
 router.use(express.static("public"));
 router.use(session({ secret: "cats" }));
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -27,28 +26,25 @@ router.get('/', (req, res) => {
 router.use("/ProductView.html", db.getProductData);
 router.get('/ProductView.html', (req, res) => {
 	res.send(renderPage('./ProductView.html', brandingData, res.dbResult[0]))
-	}
-	)
+	})
 	
 router.get('/logout', (req, res) => {
 	endSession(req);
 	res.redirect("/")
-	}
-	)
+	})
 	
-
 router.get('/api/products', db.apiAllProducts)
+router.get('/register.html', (req, res) => {
+	res.redirect("/")
+	})
 
-function renderPage(templateURI, currentJSON, JSON_retrieved )
-{
+function renderPage(templateURI, currentJSON, JSON_retrieved ){
 	var template = fs.readFileSync(templateURI, "utf8");
 	var data = currentJSON;
 	data['products'] = products;
-	for(var key in JSON_retrieved)
-	{
+	for(var key in JSON_retrieved){
 			data[key] = JSON_retrieved[key]
 	}
-	
 	//#ISSUE this needs to done only on first render
 	registerPartials();
 	var compileTemplate = handlebars.compile(template);
@@ -57,18 +53,9 @@ function renderPage(templateURI, currentJSON, JSON_retrieved )
 	return finalPageHTML;
 }
 
-
 router.use('/login', db.loginAuth);
 router.post('/login', (req,res) => {
-console.log()
-fs.writeFile("/tmp/log" + new Date().getTime() + ".txt" , JSON.stringify(req.body), function(err) {
-    if(err) {
-        return console.log(err);
-    }
-
-}); 
-	if(res.Authenticated)
-	{
+	if(res.Authenticated){
 		brandingData['Login'] = req.body.username;
 		handleResponse(res, url.parse(req.body.currentUrl).path, true);
 	}else{
@@ -77,22 +64,17 @@ fs.writeFile("/tmp/log" + new Date().getTime() + ".txt" , JSON.stringify(req.bod
 	}
 });
 
-function registerPartials()
-{
+function registerPartials(){
 	for(partial in componentData)
 	{
 		handlebars.registerPartial(partial, componentData[partial])
 		//console.log(handlebars.PARTIALS[partial])
 	}
-	
 }
 
-function registerHelpers()
-{
+function registerHelpers(){
 	handlebars.registerHelper('if_eq', function(a, b, opts) {
-
 	if (a == b) {
-
         return opts.fn(this);
     } else {
         return opts.inverse(this);
@@ -100,9 +82,7 @@ function registerHelpers()
 });
 
 handlebars.registerHelper('if_not', function(a, b, opts) {
-
 	if (a != b) {
-
         return opts.fn(this);
     } else {
         return opts.inverse(this);
@@ -115,13 +95,15 @@ handlebars.registerHelper('if_not', function(a, b, opts) {
 }
 
 function handleResponse(res, location, loginSuccess) {
-	if(loginSuccess)
-	res.redirect(location)
-	res.redirect(location+"#modalLoginForm")
+	if(loginSuccess){
+		res.redirect(location)
+	}else{
+		brandingData['Login'] = 'failed';
+		res.redirect(location+"#modalLoginForm")
+	}
 }
 
-function endSession(req)
-{
+function endSession(req){
 	brandingData['Login'] = 'login';
 	req.session.destroy();
 }
