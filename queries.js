@@ -31,13 +31,32 @@ function getProductData(req, res, next) {
 	}
   db.any('select * from product'+ dbQuery)
     .then(function (data) {
-			if(!data[0]){data=[{'product_name':'not_found', 'product_description':'no item found'}]}
+			if(data === undefined || data.length == 0){data=[{'product_name':'not_found', 'product_description':'no item found'}]}
 			res.dbResult = data;
 			next();
 		})
     .catch(function (err) {
       return next(err);
     });
+}
+
+function loginAuth(req, res, next){
+	var userData = req.body;
+	db.any('select * from users WHERE login = \'' + req.body.username+ "\'").then(function (data) {
+			if(data === undefined || data.length == 0){
+				res.Authenticated = false; 
+				next()}
+				else if(data[0].password == userData.password){
+				res.Authenticated = true; 
+				next()}
+				else{
+				res.Authenticated = false; next();
+				}
+		})  .catch(function (err) {
+      return next(err);
+    });
+	//#issue passwords should be encrypted switch to passport
+	//db.any('select * from user WHERE password = '+ dbPassword )
 }
 
 function getFeaturedProducts(req, res, next) {
@@ -50,5 +69,6 @@ function getFeaturedProducts(req, res, next) {
 module.exports = {
   apiAllProducts: apiAllProducts,
   getProductData: getProductData,
-  getFeaturedProducts: getFeaturedProducts
+  getFeaturedProducts: getFeaturedProducts,
+  loginAuth : loginAuth
 };

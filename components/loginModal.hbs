@@ -1,0 +1,27 @@
+<div class="modal fade" id="modalLoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+
+        <div class="modal-content">
+		      <button type="button" class="close text-right" style="padding:5px; margin-right:10px;" data-dismiss="modal">&times; </button>
+			  	 <br>
+             <form action="/login" method="post" onsubmit="document.getElementById('hiddenURL').value = window.location.href">
+	  <input type="hidden" name="currentUrl" id="hiddenURL" value="asdf">
+        <label>Username:</label>
+        <input type="text" name="username"/>
+		<br>
+        <label>Password:</label>
+        <input type="password" name="password"/>
+  
+            <div class="modal-footer d-flex justify-content-center">
+                <input type="submit" value="Log In"/> {{#if_eq Login 'login'}} <div>failed!</div>{{/if_eq}}
+            </div>
+			</form>
+        </div>
+    </div>
+</div>
+<div class="text-center">
+	{{#if_eq Login 'login'}}
+    <a href="" class="btn btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm">{{Login}}</a>{{/if_eq}}
+	{{#if_not Login 'login'}}welcome {{Login}}<div><a href="/logout">sign out</a></div>{{/if_not}}
+</div>
+

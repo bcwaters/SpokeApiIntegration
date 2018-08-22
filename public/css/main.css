@@ -18,8 +18,10 @@
 	.card.preview-card{
 		width:250px;
 		height: 250px;
-		
+	
 	}
+	
+   
 	.card-header{
 		background-color: #349B7C;
 		height: 35px;
@@ -48,6 +50,7 @@
 	.img-div{
 		width:100%;
 		height:150px;
+	
 	}
 	
 	.card-img-top{
@@ -56,12 +59,26 @@
 		display:block;
 		margin-left: auto;
 		margin-right: auto;
+		margin-top: 10px;
+		border-width: 2px !important;
+		border:solid;
+		border-color: #e5fcf1;
+		 display: flex;
+		overflow: hidden;
+		
 	}
+	
+		.card-img-top:hover{
+		   transform: scale(1.3); 
+		}
 	
 	.card-text.product-name{
 		margin:2px;
 		font-family: Georgia, serif;
-		align: center;
+		color: #22B;
+		font-weight: 700;
+		font-size:1.3em;
+		
 	}
 	
 	.card-footer.product-price{
@@ -101,6 +118,13 @@
 		width: 80px;
 		flex:none;
 		margin:5px;
+	}
+	
+
+	.card-footer{
+		padding:0px;
+		margin-bottom:5px;
+		padding-right:5px;
 	}
 	
 	.footerText{
