@@ -32,7 +32,7 @@
  
     <div class="col-sm-6 border" style="outline: 2px;">
       <div class="card">
-        <div class="card-header"><img src="Square1.png" style="padding:0px 0px 5px 0px;">{{step1}}	</div>
+        <div class="card-header"><img src="Square1.png" style="padding:0px 0px 5px 0px;">{{step1}}</div>
 		
 		<div class="card-body">
 		<form>
@@ -149,5 +149,12 @@
 		alert(testString);
 	}
 	</script>	
+	<script>$(document).ready(function() {
+
+  if(window.location.href.indexOf('#modalLoginForm') != -1) {
+    $('#modalLoginForm').modal('show');
+  }
+
+}); </script>
   </body>
 </html>
