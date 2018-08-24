@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var db = require('../queries');
-const handlebars = require('../helperFunctions/loadHandleBars');
+const handlebars = require('../helperFunctions/loadHandlebars');
 const fs = require("fs")
 var brandingData = require('../helperFunctions/loadDefaultJSON')
 var products= [{'product_name' : 'default'}]
