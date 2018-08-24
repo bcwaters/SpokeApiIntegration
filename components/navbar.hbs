@@ -2,9 +2,26 @@
 <nav class="navbar navbar-default navbar-light navbar-expand-sm py-0" role="navigation">
   <a class="navbar-brand py-0" href="/"><img src={{navbarBrand}} alt="BRANDLOGO"></img></a>
  <ul class="navbar-nav">
+ 
+	<li class= "nav-item">
+		<a class="nav-link" href= "/">Home</a>
+	</li>
+	
+	<li class="nav-item dropdown">
+       <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown">
+          Shop
+        </a>
+	    <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+          <a class="dropdown-item" href="/ProductView.html?product_name=shoe">Clothing</a>
+          <a class="dropdown-item" href="/ProductView.html?product_name=tattoo">Office Supplies</a>
+          <a class="dropdown-item" href="/ProductView.html?product_name=toy">Toys</a>
+        </div>
+    </li>
+	
+	
    <li class="nav-item dropdown">
         <a class="nav-link" href="/" id="navbarDropdownMenuLink" data-toggle="dropdown">
-          Featured
+          Best Sellers
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
           <a class="dropdown-item" href="/ProductView.html?product_name=shoe">Inked Shoes</a>
@@ -12,11 +29,8 @@
           <a class="dropdown-item" href="/ProductView.html?product_name=toy">Amazing Toy</a>
         </div>
       </li>
-    <li class="nav-item">
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="#">Categories</a>
-    </li>
+    
+    
   
   </ul>
 

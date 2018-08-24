@@ -3,9 +3,7 @@
         <div class="modal-content login">
 			<div class="container">
 				<div class="row content ">
-				 <div class="col-sm-9" >
-					<img class="loginIcon" src={{navbarBrand}}>
-				 </div>
+				
 					<div class="col text-right " >
 						<button type="button" class="close text-right" style="padding:5px; margin-right:10px;" data-dismiss="modal">&times; </button>
 					</div>
@@ -45,9 +43,9 @@
 </div>
 <div class="text-center">
 	{{#if_eq Login 'login'}}
-    <a href="" class="btn login btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm"><div class = loginText>login </div></a>{{/if_eq}}
+    <a href="" class="btn login btn-default btn-rounded" data-toggle="modal" data-target="#modalLoginForm"><div class = loginText>login </div></a>{{/if_eq}}
 	{{#if_eq Login 'failed'}}
-	   <a href="" class="btn login btn-default btn-rounded mb-4" data-toggle="modal" data-target="#modalLoginForm"><div class = loginText>login </div></a>
+	   <a href="" class="btn login btn-default btn-rounded" data-toggle="modal" data-target="#modalLoginForm"><div class = loginText>login </div></a>
 	{{/if_eq}}
 	{{#if_not Login 'login'}}{{#if_not Login 'failed'}}welcome {{Login}}<div><a href="/logout">sign out</a></div>{{/if_not}}{{/if_not}}
 </div>

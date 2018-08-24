@@ -2,14 +2,11 @@
 {{#each this}}
 <a class="cardlink" href="{{productUrl product_name}}">
 			<div class="card preview-card text-dark border-5;">
+				<div class="img-div"><img class="card-img-top" src={{product_image}} alt="shoe"></div>
 				<div class="card-body preview-card">
-					<div class='img-div'>
-					 <img class="card-img-top" src={{product_image}} alt="shoe">
-					 </div>
-					<p class="card-text product-name text-center">{{product_name}}</p>
-					
+					<p class="card-text product-name text-left">{{product_name}}</p>
 				</div>
-				  <div class="card-footer product-price bg-transparent text-right">$50</div>
+				 <div class="card-footer product-price bg-transparent text-left"><span class="original-price">$100</span> <span class="product-price">$50</span></div>
 			</div>
 </a>
 {{/each}}
