@@ -31,10 +31,14 @@ router.get('/logout', (req, res) => {
 	res.redirect("/")
 	})
 	
+	
+router.get('/register.html', (req,res) =>
+{
+	res.send(renderPage('./register.html', brandingData, {}));
+});	
+
 router.get('/api/products', db.apiAllProducts)
-router.get('/register.html', (req, res) => {
-	res.redirect("/")
-	})
+
 
 function renderPage(templateURI, currentJSON, JSON_retrieved ){
 	var template = fs.readFileSync(templateURI, "utf8");
@@ -57,6 +61,17 @@ router.post('/login', (req,res) => {
 		endSession(req);
 		handleResponse(res, url.parse(req.body.currentUrl).path, false);
 	}
+});
+
+
+router.use('/registerUser', db.registerUser);
+router.post('/registerUser', (req,res) => {
+	console.log(res.userCreated)
+	if(res.userCreated == false){
+		res.redirect("/register.html#duplicate")
+	}
+		res.redirect("/#registerResultTrue")
+	
 });
 
 

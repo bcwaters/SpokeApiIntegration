@@ -21,17 +21,31 @@ function apiAllProducts(req, res, next) {
     });
 }
 
-function getProductData(req, res, next) {
-	var query = req._parsedUrl['query'];
-	var dbQuery = ''
-	if(query)
-	{
-		query = query.split("=");
-		dbQuery = ' WHERE ' + query[0] + ' = \'' + query[1] + "\'"
+function validateQuery(query, res, next)
+{
+	if(query.length!=2){
+		res.dbResult=[{'product_name':'notasdf_found', 'product_description':'no item found'}];
+		next()
 	}
-  db.any('select * from product'+ dbQuery)
+}
+
+function validateQueryResponse(data, res, next)
+{
+	if(data === undefined || data.length == 0){data=[{'product_name':'not_found', 'product_description':'no item found'}]}
+			res.dbResult = data;
+			next();
+}
+
+function getProductData(req, res, next) {
+	var queryValues = req._parsedUrl['query'];
+	queryValues = queryValues.split("=");
+	validateQuery(queryValues, res, next)
+	dbQuery = 'select * from product WHERE $1~ = $2'
+
+	
+  db.any(dbQuery, queryValues)
     .then(function (data) {
-			if(data === undefined || data.length == 0){data=[{'product_name':'not_found', 'product_description':'no item found'}]}
+			validateQueryResponse(data, res, next)
 			res.dbResult = data;
 			next();
 		})
@@ -39,6 +53,26 @@ function getProductData(req, res, next) {
       return next(err);
     });
 }
+
+function registerUser(req, res, next){
+	
+  var queryString= 'INSERT INTO users(login, password) VALUES($1, $2)';
+  //validates values on client side
+  var values = [req.body.username, req.body.password]
+  db.query(queryString, values)
+  .then(res =>{res.userCreated=true; next()})
+  .catch(e => {
+	  if(e.code == 23505){
+		  console.log("handle duplicate user")
+		  res.userCreated = false;
+		  next()
+	  }
+	  next(e)
+	  })
+  
+  
+}
+	
 
 function loginAuth(req, res, next){
 	var userData = req.body;
@@ -68,5 +102,6 @@ module.exports = {
   apiAllProducts: apiAllProducts,
   getProductData: getProductData,
   getFeaturedProducts: getFeaturedProducts,
-  loginAuth : loginAuth
+  loginAuth : loginAuth,
+  registerUser: registerUser
 };

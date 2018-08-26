@@ -12,31 +12,16 @@
     <title>{{brandTitle}}</title>
   </head>
   <body >
+  
+  <div>Create your user name and password</div>
 
-<div class="container-fluid border shadow fluid py-0" style="background-color: white; padding:0px;" >
-{{> navbar}}
-<div class="container-fluid" id="banner">
-	<div class="row">
-	<img class='img-fluid w-100' src={{bannerImage}} alt="Card image cap"> 
-	</div>
-</div>
+<form action="/registerUser" method="post">
+  User Name: <input type="text" name="username"><br>
+  Password:  <input type="text" name="password"><br>
+  <input type="submit" value="Submit">
+</form>
 
-<div class="container">  
-<div class="row content best-sellers-title text-center d-block">
-<span id="best-seller-span d-block" style="margin-top:40px;">Best Sellers this week</span>
-</div>
-	<div class="row preview-card-row">
-	{{#each this}}
-		{{> previewCard }}
-	{{/each}}
-	</div>
-</div>
-<footer class="footer">		
-      <div class="container"><center><div class="footerText">
-      </center></div>
-      </div>
-</footer>
-</div>
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -46,13 +31,12 @@
 		<!--Developer Scripts-->
 	<script>$(document).ready(function() {
 
-  if(window.location.href.indexOf('#modalLoginForm') != -1) {
-    $('#modalLoginForm').modal('show');
+  if(window.location.href.indexOf('#duplicate') != -1) {
+    alert("username taken")
   }
-  if(window.location.href.indexOf('#registerResultTrue') != -1) {
-	alert("registration success")
-  }
- 
+  
+  
+
 }); </script>
   </body>
   
