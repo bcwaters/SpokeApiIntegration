@@ -55,7 +55,8 @@ function getProductData(req, res, next) {
 }
 
 function registerUser(req, res, next){
-	
+
+	console.log("register user called")
   var queryString= 'INSERT INTO users(login, password) VALUES($1, $2)';
   //validates values on client side
   var values = [req.body.username, req.body.password]

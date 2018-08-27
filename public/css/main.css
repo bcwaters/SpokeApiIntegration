@@ -1,4 +1,24 @@
 
+	#modalRegisterForm label{
+		padding-right:3px;
+		white-space: nowrap;
+	}
+	#modalRegisterForm.col-sm-5{
+		padding-left:3px;
+		white-space: nowrap;
+	}
+	
+	.col-sm-2.error{
+		color:#990000;
+		white-space: nowrap;
+		font-size: 80%;
+		padding:0px;
+	}
+	
+	.modal-content.register{
+		background-color: #4CA6A6;
+		background: linear-gradient(#4CA6A6, #96B396)
+	}
 	
 	#banner{
 		width:100%;
@@ -24,7 +44,7 @@
 	}
 	
 	.modal-content.login{
-		 background-color: #4CA6A6;
+		background-color: #4CA6A6;
 		background: linear-gradient(#4CA6A6, #96B396)
 	}
 	

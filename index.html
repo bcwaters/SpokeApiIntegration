@@ -14,7 +14,7 @@
   <body >
 
 <div class="container-fluid border shadow fluid py-0" style="background-color: white; padding:0px;" >
-{{> navbar}}
+{{> navbar}}  
 <div class="container-fluid" id="banner">
 	<div class="row">
 	<img class='img-fluid w-100' src={{bannerImage}} alt="Card image cap"> 
@@ -31,11 +31,7 @@
 	{{/each}}
 	</div>
 </div>
-<footer class="footer">		
-      <div class="container"><center><div class="footerText">
-      </center></div>
-      </div>
-</footer>
+{{> footer}}
 </div>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
@@ -51,6 +47,11 @@
   }
   if(window.location.href.indexOf('#registerResultTrue') != -1) {
 	alert("registration success")
+  }
+  
+  if(window.location.href.indexOf('#duplicate') != -1) {
+    alert("username taken");
+	$('#modalRegisterForm').modal('show');
   }
  
 }); </script>

@@ -63,18 +63,15 @@ router.post('/login', (req,res) => {
 	}
 });
 
-
 router.use('/registerUser', db.registerUser);
 router.post('/registerUser', (req,res) => {
 	console.log(res.userCreated)
 	if(res.userCreated == false){
-		res.redirect("/register.html#duplicate")
+		res.redirect("/#duplicate")
 	}
 		res.redirect("/#registerResultTrue")
 	
 });
-
-
 
 function handleResponse(res, location, loginSuccess) {
 	if(loginSuccess){
