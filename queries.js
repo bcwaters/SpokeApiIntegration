@@ -95,7 +95,7 @@ function loginAuth(req, res, next){
 }
 
 function getFeaturedProducts(req, res, next) {
-	res.products = [{'product_name':'shoe', 'product_image':"shoe.png"},{'product_name':'toy','product_image':"toy.png"},{'product_name':'tattoo','product_image':"tattoo.png"}]
+	res.products = [{'product_name':'shoe', 'product_image':"shoe.png", 'id':1, 'qty':1, 'price':5},{'product_name':'toy','product_image':"toy.png", 'id':2, 'qty':1, 'price':5},{'product_name':'tattoo','product_image':"tattoo.png", 'id':3, 'qty':1, 'price':5}]
    next();
 }
 
