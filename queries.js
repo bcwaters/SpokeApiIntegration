@@ -36,13 +36,12 @@ function validateQueryResponse(data, res, next)
 			next();
 }
 
+//get request for a product by id
 function getProductData(req, res, next) {
 	var queryValues = req._parsedUrl['query'];
 	queryValues = queryValues.split("=");
 	validateQuery(queryValues, res, next)
-	dbQuery = 'select * from product WHERE $1~ = $2'
-
-	
+	dbQuery = 'select * from products WHERE $1~ = $2'	
   db.any(dbQuery, queryValues)
     .then(function (data) {
 			validateQueryResponse(data, res, next)
@@ -54,9 +53,23 @@ function getProductData(req, res, next) {
     });
 }
 
+//post request for a product by id
+function getProductById(req, res, next) {
+
+  var queryString= 'select * from products WHERE $1~ = $2';
+  //validates values on client side
+  var values = ['id', req.body.id]
+  db.query(queryString, values).then(function (data) {
+			res.dbResult = data;
+			next()})
+  .catch(e => {
+	  next(e)
+	  })
+  
+}
+
 function registerUser(req, res, next){
 
-	console.log("register user called")
   var queryString= 'INSERT INTO users(login, password) VALUES($1, $2)';
   //validates values on client side
   var values = [req.body.username, req.body.password]
@@ -95,8 +108,15 @@ function loginAuth(req, res, next){
 }
 
 function getFeaturedProducts(req, res, next) {
-	res.products = [{'product_name':'shoe', 'product_image':"shoe.png", 'id':1, 'qty':1, 'price':5},{'product_name':'toy','product_image':"toy.png", 'id':2, 'qty':1, 'price':5},{'product_name':'tattoo','product_image':"tattoo.png", 'id':3, 'qty':1, 'price':5}]
-   next();
+	
+	db.any('select * from products')
+    .then(function (data) {
+      res.data = data;
+	  next();
+    })
+    .catch(function (err) {
+      return next(err);
+    });
 }
 
 module.exports = {
@@ -104,5 +124,6 @@ module.exports = {
   getProductData: getProductData,
   getFeaturedProducts: getFeaturedProducts,
   loginAuth : loginAuth,
-  registerUser: registerUser
+  registerUser: registerUser,
+  getProductById: getProductById
 };

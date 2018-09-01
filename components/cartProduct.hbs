@@ -1,0 +1,17 @@
+
+<div class="container">
+{{#if_eq @key 'products'}}
+{{#each this}}
+<div class="row">
+Product Name: {{title}}, Price {{price}}, Quantity: {{qty}} {{id}}
+<form method="post" action="removeProduct" class="inline">
+  <input type="hidden" name="id" value={{id}}>
+  <button type="submit" name="removeProduct" value="removeProduct" class="link-button">
+    Remove
+  </button>
+</form>
+</div>
+{{/each}}
+{{/if_eq}}
+</div>
+

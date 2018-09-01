@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.3.1/css/all.css" integrity="sha384-mzrmE5qonljUremFsqc01SB46JvROS7bZs3IO2EmfFsd15uHvIt+Y8vEf7N7fWAU" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="/css/main.css">
 	<link rel="shortcut icon" type="image/x-icon" href="favicon.ico"/>
     <title>{{brandTitle}}</title>
@@ -25,16 +26,14 @@
 	   <img src={{product_image}} alt="Card image cap" style="max-width: 100%; height: auto; border:1px solid grey; margin:3px;"> </center> <br>
 	{{{product_description}}}
 	</div>
- 
+
     <div class="col-sm-6 border" style="outline: 2px;">
+	<form method="post" action="addToCart">
       <div class="card">
         <div class="card-header"><img src="Square1.png" style="padding:0px 0px 5px 0px;">{{step1}}</div>
 		
 		<div class="card-body">
-		<form>
-			<input onclick="selectGender('Male')" type="radio" name="gender" value="male" checked> Male
-			<input onclick="selectGender('Female')" type="radio" name="gender" value="female"> Female
-		</form> 
+		
 		
 		<select id="shoeSizeSelect" onchange="selectSize(this)">
 			<option value="5">5</option>
@@ -54,21 +53,9 @@
 		</div>
       </div>
 	  
-	  <div class="card text-left" >
-		<div class="card-header" ><img src="Square2.png" style="padding:0px 0px 5px 0px;">{{step2}}</div>
-		<div class="card-body">
-			<p>• First <a href="/templateFile" Download> download </a> a template to create an image for your shoe
-			</p>
-			<p> • Double check that the template meets <a href="/Artwork_Requirements.pdf" >requirements</a></p>
-			<p> • Now upload your completed image</p>
-		<div class="form-group">
-			<input type="file" class="form-control-file" id="exampleFormControlFile1">
-		</div>
-		</div>
-	  </div>
-      
+
 	  <div class="card" >
-		<div class="card-header" ><img src="Square3.png" style="padding:0px 0px 5px 0px;"> 	{{step3}}</div>
+		<div class="card-header" ><img src="Square2.png" style="padding:0px 0px 5px 0px;"> 	{{step2}}</div>
 		<div class="card-body">
 			<div class="row content">
 				<div class="col-xs-2">
@@ -84,11 +71,13 @@
 				</div>
 				
 				<div class="col-sm">
-					<a href="#" onclick="checkout()" class="btn btn-success float-right" style="align:left">Checkout</a>
+					<input type="hidden" id="id" name="id" value={{id}}>
+					<input href="addToCart" name="addToCart" value="Add to cart" type="submit" onclick="checkout()" class="btn btn-success float-right" style="align:left"></a>
 				</div>
 			</div>
 		</div>
       </div>
+	  </form>
 	</div>
   </div>
 </div>

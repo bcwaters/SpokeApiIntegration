@@ -10,21 +10,22 @@ var session = require("express-session"),
     bodyParser = require("body-parser");
 var cart = require("../lib/shoppingCart");
 	
+router.all('*', updateCart)	
 router.use(express.static("public"));
 router.use(session({ secret: "cats" }));
 router.use(bodyParser.urlencoded({ extended: true }));
 
 router.use("/", db.getFeaturedProducts);								
 router.get('/', (req, res) => {
-		if(res.products)products = res.products;
-		console.log(res.products)
-		res.send(renderPage('./index.html', brandingData))
+		
+		res.send(renderPage('./index.html', brandingData, { products:res.data}) )
 		}
 	)
 
-//add middleware to send database request	
+//TODO add middleware to send database request	
 router.use("/ProductView.html", db.getProductData);
 router.get('/ProductView.html', (req, res) => {
+	
 	res.send(renderPage('./ProductView.html', brandingData, res.dbResult[0]))
 	})
 	
@@ -41,16 +42,37 @@ router.get('/register.html', (req,res) =>
 
 router.get('/api/products', db.apiAllProducts)
 
+//TODO Change this middleware to query for a product id which is to be added to cart
+router.use("/cart", db.getFeaturedProducts);
 router.get('/cart',(req, res) =>{
-	var testItems = [{'product_name':'shoe', 'product_image':"shoe.png", 'id':1, 'qty':1, 'price':5},{'product_name':'toy','product_image':"toy.png", 'id':2, 'qty':1, 'price':5},{'product_name':'tattoo','product_image':"tattoo.png", 'id':3, 'qty':1, 'price':5}];
-	
 	var i;
-	for(i=0; i<testItems.length; i++){
-
-		cart.addToCart(testItems[i], 1, cart)
+	for(i=0; i<res.data.length; i++){
+		cart.addToCart(res.data[i], 1, cart)
 	}
-		console.log(cart.data)
-	res.send(cart.data.items)
+	res.send(renderPage('./cart.html', brandingData, cart.data))
+})
+
+
+
+router.use("/addToCart", db.getProductById);
+router.post("/addToCart", (req, res) =>{
+		
+		//TODO get quanity amount from body instead of defaulting to 1
+		cart.addToCart(res.dbResult[0], 1, cart)
+	
+	res.redirect("/viewCart.html")
+})
+
+router.post("/removeProduct", (req, res) =>{
+		//TODO get quanity amount from body instead of defaulting to 1
+		cart.removeFromCart(req.body.id, cart)
+	
+	res.redirect("/viewCart.html")
+})
+
+router.get("/viewCart.html", (req, res) =>{
+		
+	res.send(renderPage('./cart.html', brandingData, cart.data))
 })
 
 function renderPage(templateURI, currentJSON, JSON_retrieved ){
@@ -78,35 +100,13 @@ router.post('/login', (req,res) => {
 
 router.use('/registerUser', db.registerUser);
 router.post('/registerUser', (req,res) => {
-	console.log(res.userCreated)
+	
 	if(res.userCreated == false){
 		res.redirect("/#duplicate")
 	}
 		res.redirect("/#registerResultTrue")
 	
 });
-
-/*
-router.post('/cart', (req, res) => {
-  let qty = parseInt(req.body.qty, 10);
-  let product = parseInt(req.body.product_id, 10);
-  if(qty > 0) {
-    Products.findOne({product_id: product}).then(prod => {
-        Cart.addToCart(prod, qty);
-        Cart.saveCart(req);
-        res.redirect('/cart');
-    }).catch(err => {
-       res.redirect('/');
-    });
-} else {
-    res.redirect('/');
-}
-});
-*/
-
-
-
-
 
 function handleResponse(res, location, loginSuccess) {
 	if(loginSuccess){
@@ -120,6 +120,11 @@ function handleResponse(res, location, loginSuccess) {
 function endSession(req){
 	brandingData['Login'] = 'login';
 	req.session.destroy();
+}
+
+function updateCart(res, req, next){
+	brandingData['cartQty'] = cart.data.products.length;
+	next();
 }
 
 module.exports = router;
