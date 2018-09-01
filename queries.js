@@ -1,12 +1,8 @@
-var pgp = require('pg-promise')({});
 
-var isLocal = process.env.DATABASE_LOCAL == "true"
-const db = pgp(
-   process.env.DATABASE_URL
-);
-
+module.exports = function(db){
 // add query functions
-function apiAllProducts(req, res, next) {
+var module = {};
+module.apiAllProducts = function(req, res, next) {
   db.any('select * from product')
     .then(function (data) {
       res.status(200)
@@ -37,7 +33,7 @@ function validateQueryResponse(data, res, next)
 }
 
 //get request for a product by id
-function getProductData(req, res, next) {
+module.getProductData = function (req, res, next) {
 	var queryValues = req._parsedUrl['query'];
 	queryValues = queryValues.split("=");
 	validateQuery(queryValues, res, next)
@@ -54,8 +50,7 @@ function getProductData(req, res, next) {
 }
 
 //post request for a product by id
-function getProductById(req, res, next) {
-
+module.getProductById = function (req, res, next) {
   var queryString= 'select * from products WHERE $1~ = $2';
   //validates values on client side
   var values = ['id', req.body.id]
@@ -65,10 +60,8 @@ function getProductById(req, res, next) {
   .catch(e => {
 	  next(e)
 	  })
-  
 }
-
-function registerUser(req, res, next){
+module.registerUser = function (req, res, next){
 
   var queryString= 'INSERT INTO users(login, password) VALUES($1, $2)';
   //validates values on client side
@@ -82,13 +75,10 @@ function registerUser(req, res, next){
 		  next()
 	  }
 	  next(e)
-	  })
-  
-  
+	  })  
 }
 	
-
-function loginAuth(req, res, next){
+module.loginAuth = function (req, res, next){
 	var userData = req.body;
 	db.any('select * from users WHERE login = \'' + req.body.username+ "\'").then(function (data) {
 			if(data === undefined || data.length == 0){
@@ -103,11 +93,11 @@ function loginAuth(req, res, next){
 		})  .catch(function (err) {
       return next(err);
     });
-	//#issue passwords should be encrypted switch to passport
+	//#TODO passwords should be encrypted switch to passport
 	//db.any('select * from user WHERE password = '+ dbPassword )
 }
 
-function getFeaturedProducts(req, res, next) {
+module.getFeaturedProducts = function (req, res, next) {
 	
 	db.any('select * from products')
     .then(function (data) {
@@ -119,11 +109,5 @@ function getFeaturedProducts(req, res, next) {
     });
 }
 
-module.exports = {
-  apiAllProducts: apiAllProducts,
-  getProductData: getProductData,
-  getFeaturedProducts: getFeaturedProducts,
-  loginAuth : loginAuth,
-  registerUser: registerUser,
-  getProductById: getProductById
-};
+return module;
+}

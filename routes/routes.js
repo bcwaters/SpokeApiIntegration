@@ -1,24 +1,21 @@
 var express = require('express');
 var router = express.Router();
-var db = require('../queries');
 const handlebars = require('../lib/loadHandlebars');
 const fs = require("fs")
 var brandingData = require('../lib/loadDefaultJSON')
-var products= [{'product_name' : 'default'}]
 const url = require('url')
-var session = require("express-session"),
-    bodyParser = require("body-parser");
-var cart = require("../lib/shoppingCart");
+bodyParser = require("body-parser");
+var cart = require("../lib/shoppingCart")
+module.exports = function(db){
 	
-router.all('*', updateCart)	
+	
 router.use(express.static("public"));
-router.use(session({ secret: "cats" }));
 router.use(bodyParser.urlencoded({ extended: true }));
+router.use('/*', updateCart)
 
 router.use("/", db.getFeaturedProducts);								
 router.get('/', (req, res) => {
-		
-		res.send(renderPage('./index.html', brandingData, { products:res.data}) )
+		res.send(renderPage('./index.html', brandingData, { featuredProducts:res.data}) )
 		}
 	)
 
@@ -42,50 +39,28 @@ router.get('/register.html', (req,res) =>
 
 router.get('/api/products', db.apiAllProducts)
 
-//TODO Change this middleware to query for a product id which is to be added to cart
-router.use("/cart", db.getFeaturedProducts);
-router.get('/cart',(req, res) =>{
-	var i;
-	for(i=0; i<res.data.length; i++){
-		cart.addToCart(res.data[i], 1, cart)
-	}
-	res.send(renderPage('./cart.html', brandingData, cart.data))
-})
-
-
-
 router.use("/addToCart", db.getProductById);
 router.post("/addToCart", (req, res) =>{
 		
 		//TODO get quanity amount from body instead of defaulting to 1
-		cart.addToCart(res.dbResult[0], 1, cart)
-	
+		cart.addToCart(res.dbResult[0], 1, cart, req.session.cart.products)
+		cart.saveCart(req)
 	res.redirect("/viewCart.html")
 })
 
 router.post("/removeProduct", (req, res) =>{
-		//TODO get quanity amount from body instead of defaulting to 1
-		cart.removeFromCart(req.body.id, cart)
-	
+		
+		cart.removeFromCart(req.body.id, cart, req.session.cart.products)
+		cart.saveCart(req)
 	res.redirect("/viewCart.html")
 })
 
 router.get("/viewCart.html", (req, res) =>{
-		
-	res.send(renderPage('./cart.html', brandingData, cart.data))
+	if(req.session.cart == null) req.cart = {};	
+	console.log("session cart data: "); console.log(req.session)
+	res.send(renderPage('./cart.html', brandingData, req.session.cart))
 })
 
-function renderPage(templateURI, currentJSON, JSON_retrieved ){
-	var template = fs.readFileSync(templateURI, "utf8");
-	var data = currentJSON;
-	data['products'] = products;
-	for(var key in JSON_retrieved){
-			data[key] = JSON_retrieved[key]
-	}
-	var compileTemplate = handlebars.compile(template);
-	finalPageHTML = compileTemplate(data);
-	return finalPageHTML;
-}
 
 router.use('/login', db.loginAuth);
 router.post('/login', (req,res) => {
@@ -108,6 +83,18 @@ router.post('/registerUser', (req,res) => {
 	
 });
 
+function renderPage(templateURI, currentJSON, JSON_retrieved ){
+	var template = fs.readFileSync(templateURI, "utf8");
+	var data = currentJSON;
+	for(var key in JSON_retrieved){
+			data[key] = JSON_retrieved[key]
+	}
+	
+	var compileTemplate = handlebars.compile(template);
+	finalPageHTML = compileTemplate(data);
+	return finalPageHTML;
+}
+
 function handleResponse(res, location, loginSuccess) {
 	if(loginSuccess){
 		res.redirect(location)
@@ -122,9 +109,15 @@ function endSession(req){
 	req.session.destroy();
 }
 
-function updateCart(res, req, next){
-	brandingData['cartQty'] = cart.data.products.length;
+function updateCart(req, res, next){
+	
+	if(req.session.cart == null){req.session.cart = {}; req.session.cart.products = [] }
+	brandingData['cartQty'] = req.session.cart.products.length;
+	console.log(req.session.id)
+	
 	next();
 }
+	return router;
+}
 
-module.exports = router;
+

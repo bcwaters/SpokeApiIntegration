@@ -3,7 +3,7 @@
 {{#if_eq @key 'products'}}
 {{#each this}}
 <div class="row">
-Product Name: {{title}}, Price {{price}}, Quantity: {{qty}} {{id}}
+Product Name: {{title}}, Price {{price}}, Quantity: {{qty}}
 <form method="post" action="removeProduct" class="inline">
   <input type="hidden" name="id" value={{id}}>
   <button type="submit" name="removeProduct" value="removeProduct" class="link-button">
