@@ -6,7 +6,7 @@ var brandingData = require('../lib/loadDefaultJSON')
 const url = require('url')
 bodyParser = require("body-parser");
 var cart = require("../lib/shoppingCart")
-module.exports = function(db){
+module.exports = function(db, passport){
 	
 	
 router.use(express.static("public"));
@@ -15,6 +15,7 @@ router.use('/*', updateCart)
 
 router.use("/", db.getFeaturedProducts);								
 router.get('/', (req, res) => {
+		console.log(req.session)
 		res.send(renderPage('./index.html', brandingData, { featuredProducts:res.data}) )
 		}
 	)
@@ -27,7 +28,11 @@ router.get('/ProductView.html', (req, res) => {
 	})
 	
 router.get('/logout', (req, res) => {
-	endSession(req);
+	console.log("calling req.logout")
+	brandingData['Login'] = 'login';
+	 req.session.destroy(function (err) {
+    res.redirect('/'); //Inside a callback… bulletproof!
+  });
 	res.redirect("/")
 	})
 	
@@ -62,26 +67,28 @@ router.get("/viewCart.html", (req, res) =>{
 })
 
 
-router.use('/login', db.loginAuth);
-router.post('/login', (req,res) => {
-	if(res.Authenticated){
-		brandingData['Login'] = req.body.username;
-		handleResponse(res, url.parse(req.body.currentUrl).path, true);
-	}else{
-		endSession(req);
-		handleResponse(res, url.parse(req.body.currentUrl).path, false);
-	}
+//router.use('/login', db.loginAuth);
+router.post('/login', passport.authenticate('login', {
+    successRedirect: '/loginSuccess',
+    failureRedirect: '/loginFailed',
+    failureFlash : true 
+  })
+);
+
+router.get('/loginSuccess',(req,res) => {
+	
+		brandingData['Login'] = req.user;
+		handleResponse(res, '/', true);
+
 });
 
-router.use('/registerUser', db.registerUser);
-router.post('/registerUser', (req,res) => {
-	
-	if(res.userCreated == false){
-		res.redirect("/#duplicate")
-	}
-		res.redirect("/#registerResultTrue")
-	
-});
+//router.use('/registerUser', db.registerUser);
+router.post('/registerUser', passport.authenticate('signup',{
+    successRedirect: '/#registerResultTrue',
+    failureRedirect: '/#duplicate',
+    failureFlash : true 
+  })
+ )
 
 function renderPage(templateURI, currentJSON, JSON_retrieved ){
 	var template = fs.readFileSync(templateURI, "utf8");
@@ -105,12 +112,13 @@ function handleResponse(res, location, loginSuccess) {
 }
 
 function endSession(req){
-	brandingData['Login'] = 'login';
-	req.session.destroy();
+	
+	req.logout();
 }
 
 function updateCart(req, res, next){
-	
+	console.log("is logging in?:"+req.isAuthenticated())
+	console.log(req.user)
 	if(req.session.cart == null){req.session.cart = {}; req.session.cart.products = [] }
 	brandingData['cartQty'] = req.session.cart.products.length;
 	console.log(req.session.id)

@@ -61,11 +61,11 @@ module.getProductById = function (req, res, next) {
 	  next(e)
 	  })
 }
-module.registerUser = function (req, res, next){
+module.registerUser = function (req, newUser, next){
 
-  var queryString= 'INSERT INTO users(login, password) VALUES($1, $2)';
+  var queryString= 'INSERT INTO users(login, password, sid) VALUES($1, $2, $3)';
   //validates values on client side
-  var values = [req.body.username, req.body.password]
+  var values = [newUser.username, newUser.password, req.session.id]
   db.query(queryString, values)
   .then(res =>{res.userCreated=true; next()})
   .catch(e => {
@@ -78,24 +78,60 @@ module.registerUser = function (req, res, next){
 	  })  
 }
 	
-module.loginAuth = function (req, res, next){
-	var userData = req.body;
-	db.any('select * from users WHERE login = \'' + req.body.username+ "\'").then(function (data) {
+module.loginAuth = function (username, next){
+	
+	db.any('select * from users WHERE login = \'' + username+ "\'").then(function (data) {
 			if(data === undefined || data.length == 0){
-				res.Authenticated = false; 
-				next()}
-				else if(data[0].password == userData.password){
-				res.Authenticated = true; 
-				next()}
+				next(null, null)}
 				else{
-				res.Authenticated = false; next();
+				next(null, data[0]);
 				}
 		})  .catch(function (err) {
-      return next(err);
+      return next(err, null);
     });
 	//#TODO passwords should be encrypted switch to passport
 	//db.any('select * from user WHERE password = '+ dbPassword )
 }
+
+module.findUser = function(username, callbackFunction){
+	db.any('select * from users WHERE login = \'' + username+ "\'").then(function (data) {
+			if(data === undefined || data.length == 0){
+				callbackFunction(null, null)}
+				else{
+				callbackFunction(null, data[0]);
+				}
+		})  .catch(function (err) {
+      return callbackFunction(err, null);
+    });
+	
+}
+
+
+/*
+function getUserSession(req, res, sid, next){
+	console.log(sid)
+	db.any('select * from session where sid = \'' + sid + '\'').then(function(data){
+		if(data === undefined || data.length == 0){
+		//TODO no session stored update user table to include current session
+		console.log("no sess exist for user")
+		next();
+		}else{
+			console.log("setting session: ")
+			console.log(sid);
+			
+			console.log("new session id:")
+			//res.clearCookie(req.session.id)
+			res.clearCookie('sid')
+			res.cookie('sid', sid)
+			
+			console.log("end log")
+			next();
+	}}
+	
+	).catch(function(err){return next(err)})
+	
+}
+*/
 
 module.getFeaturedProducts = function (req, res, next) {
 	

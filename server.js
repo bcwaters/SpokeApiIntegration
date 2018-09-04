@@ -3,24 +3,33 @@ const express = require('express')
 const app = express()
 const path = require("path")
 var session = require("express-session")
-var sessionstore = require('sessionstore');
 var uuid = require('uuid');
 //TODO config pgPromise connection pool and fix cart action session issues
 const pgp = require('./lib/loadDb');
 var db = require('./queries')(pgp);
-var routes = require('./routes/routes')(db)
-var pgSession = require('connect-pg-simple')(session);
 
+var pgSession = require('connect-pg-simple')(session);
+var passport = require('./lib/loadPassport')(db);
+
+
+
+
+
+var routes = require('./routes/routes')(db,passport)
 var config = {
 	genid: function(req) { return uuid(); },
-	name: 'server-session-cookie-id',
+	name: 'sid',
 	secret: 'cats',
 	saveUninitialized: true,
 	resave: true,
-	store: new pgSession({pgPromise: pgp})
+	store: new pgSession({pgPromise: pgp}),
+	cookie:{secure: false}
 }
 
 app.use(session(config));
+app.use(passport.initialize())
+app.use(passport.session())
+
 app.use('/', routes);
 app.use(express.static(__dirname + '/public'));
 
