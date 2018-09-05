@@ -50,13 +50,13 @@ module.getProductData = function (req, res, next) {
 }
 
 //post request for a product by id
-module.getProductById = function (req, res, next) {
+module.getProductById = function (id, next) {
   var queryString= 'select * from products WHERE $1~ = $2';
   //validates values on client side
-  var values = ['id', req.body.id]
+  var values = ['id', id]
   db.query(queryString, values).then(function (data) {
-			res.dbResult = data;
-			next()})
+			if(data === undefined || data.length == 0){data=[{'product_name':'not_found', 'product_description':'no item found'}]}
+			next(data[0])})
   .catch(e => {
 	  next(e)
 	  })
@@ -95,6 +95,20 @@ module.loginAuth = function (req, res, next){
     });
 	//#TODO passwords should be encrypted switch to passport
 	//db.any('select * from user WHERE password = '+ dbPassword )
+}
+
+module.findUser = function(username, callbackFunction){
+	db.any('select * from users WHERE login = \'' + username+ "\'").then(function (data) {
+			if(data === undefined || data.length == 0){
+				callbackFunction(null, null)}
+				else{
+					
+				callbackFunction(null, data[0]);
+				}
+		})  .catch(function (err) {
+      return callbackFunction(err, null);
+    });
+	
 }
 
 module.getFeaturedProducts = function (req, res, next) {

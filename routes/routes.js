@@ -27,8 +27,7 @@ router.get('/ProductView.html', (req, res) => {
 	})
 	
 router.get('/logout', (req, res) => {
-	endSession(req);
-	res.redirect("/")
+	endSession(req, res);
 	})
 	
 	
@@ -39,35 +38,36 @@ router.get('/register.html', (req,res) =>
 
 router.get('/api/products', db.apiAllProducts)
 
-router.use("/addToCart", db.getProductById);
+router.use("/addToCart", addToCart);
 router.post("/addToCart", (req, res) =>{
-		
-		//TODO get quanity amount from body instead of defaulting to 1
-		cart.addToCart(res.dbResult[0], 1, cart, req.session.cart.products)
-		cart.saveCart(req)
-	res.redirect("/viewCart.html")
+		console.log("ITEM ADDED TO CART ABOUT TO REDIRECT")
+		console.log(req.session)
+		req.session.save(res.redirect("/viewCart.html"))
 })
 
 router.post("/removeProduct", (req, res) =>{
 		
 		cart.removeFromCart(req.body.id, cart, req.session.cart.products)
-		cart.saveCart(req)
-	res.redirect("/viewCart.html")
+		cart.saveCart(req, function(){res.redirect("/viewCart.html")})
+	
 })
 
 router.get("/viewCart.html", (req, res) =>{
+	console.log("now redirected to viewcart  current session:")
+	console.log(req.session)
 	if(req.session.cart == null) req.cart = {};	
-	console.log("session cart data: "); console.log(req.session)
 	res.send(renderPage('./cart.html', brandingData, req.session.cart))
 })
 
 
-router.use('/login', db.loginAuth);
+router.use('/login', authenticateUser);
 router.post('/login', (req,res) => {
 	if(res.Authenticated){
+		console.log("rendering success login")
 		brandingData['Login'] = req.body.username;
 		handleResponse(res, url.parse(req.body.currentUrl).path, true);
 	}else{
+		console.log("render failure log")
 		endSession(req);
 		handleResponse(res, url.parse(req.body.currentUrl).path, false);
 	}
@@ -104,9 +104,43 @@ function handleResponse(res, location, loginSuccess) {
 	}
 }
 
-function endSession(req){
+function endSession(req, res){
 	brandingData['Login'] = 'login';
-	req.session.destroy();
+	req.session.regenerate(function(err){res.redirect('/')});
+}
+
+function authenticateUser(req, res, next){
+	db.findUser(req.body.username, function(err,data){
+		//Authentication logic will go here
+		if(data){
+			//response has sent back data
+			//TODO compare password login
+				req.session.username = data.login
+				console.log(req.session)
+				res.Authenticated = true; 
+				next()
+		}else{
+			//no user found		
+			res.Authenticated = false;
+			next();
+		}
+	})
+}
+
+function addToCart(req, res, next){
+	db.getProductById(req.body.id, function(data){
+		//add db response to cart object
+		if(data){
+		//TODO get quanity amount from body instead of defaulting to 1
+			cart.addToCart(data, 1, cart, req.session.cart.products)
+			cart.saveCart(req, next)
+		}else{
+			console.log("NO ITEM FOUND")
+			next();
+		}
+		
+	})
+	
 }
 
 function updateCart(req, res, next){

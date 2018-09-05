@@ -17,7 +17,7 @@ var config = {
 	secret: 'cats',
 	saveUninitialized: true,
 	resave: true,
-	store: new pgSession({pgPromise: pgp})
+	//store: new pgSession({pgPromise: pgp})  TODO find a suitable session store
 }
 
 app.use(session(config));
