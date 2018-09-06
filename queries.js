@@ -53,7 +53,7 @@ module.getProductData = function (req, res, next) {
 module.getProductById = function (id, next) {
   var queryString= 'select * from products WHERE $1~ = $2';
   //validates values on client side
-  var values = ['id', id]
+  let values = ['id', id]
   db.query(queryString, values).then(function (data) {
 			if(data === undefined || data.length == 0){data=[{'product_name':'not_found', 'product_description':'no item found'}]}
 			next(data[0])})
@@ -61,12 +61,12 @@ module.getProductById = function (id, next) {
 	  next(e)
 	  })
 }
-module.registerUser = function (req, res, next){
+module.registerUser = function (userValues, req, res, next){
 
   var queryString= 'INSERT INTO users(login, password) VALUES($1, $2)';
   //validates values on client side
-  var values = [req.body.username, req.body.password]
-  db.query(queryString, values)
+
+  db.query(queryString, userValues)
   .then(res =>{res.userCreated=true; next()})
   .catch(e => {
 	  if(e.code == 23505){

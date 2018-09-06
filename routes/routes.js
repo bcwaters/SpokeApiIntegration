@@ -6,12 +6,13 @@ var brandingData = require('../lib/loadDefaultJSON')
 const url = require('url')
 bodyParser = require("body-parser");
 var cart = require("../lib/shoppingCart")
+var bcrypt = require('bcrypt')
 module.exports = function(db){
 	
 	
 router.use(express.static("public"));
 router.use(bodyParser.urlencoded({ extended: true }));
-router.use('/*', updateCart)
+router.use('/*', applySessionVariables)
 
 router.use("/", db.getFeaturedProducts);								
 router.get('/', (req, res) => {
@@ -55,7 +56,7 @@ router.post("/removeProduct", (req, res) =>{
 router.get("/viewCart.html", (req, res) =>{
 	console.log("now redirected to viewcart  current session:")
 	console.log(req.session)
-	if(req.session.cart == null) req.cart = {};	
+	if(req.session.cart == null) req.session.cart = {};	
 	res.send(renderPage('./cart.html', brandingData, req.session.cart))
 })
 
@@ -63,17 +64,15 @@ router.get("/viewCart.html", (req, res) =>{
 router.use('/login', authenticateUser);
 router.post('/login', (req,res) => {
 	if(res.Authenticated){
-		console.log("rendering success login")
+
 		brandingData['Login'] = req.body.username;
-		handleResponse(res, url.parse(req.body.currentUrl).path, true);
+		loginRedirect(res, url.parse(req.body.currentUrl).path, true);
 	}else{
-		console.log("render failure log")
-		endSession(req);
-		handleResponse(res, url.parse(req.body.currentUrl).path, false);
+		loginRedirect(res, url.parse(req.body.currentUrl).path, false);
 	}
 });
 
-router.use('/registerUser', db.registerUser);
+router.use('/registerUser', registerUser);
 router.post('/registerUser', (req,res) => {
 	
 	if(res.userCreated == false){
@@ -82,6 +81,16 @@ router.post('/registerUser', (req,res) => {
 		res.redirect("/#registerResultTrue")
 	
 });
+
+function registerUser(req, res, next){
+	var values = [];
+	
+	bcrypt.hash(req.body.password, 10, function(err, hash) {
+		values.push( req.body.username)
+		values.push(hash);
+		db.registerUser(values, req, res, next);
+	})
+}
 
 function renderPage(templateURI, currentJSON, JSON_retrieved ){
 	var template = fs.readFileSync(templateURI, "utf8");
@@ -95,7 +104,7 @@ function renderPage(templateURI, currentJSON, JSON_retrieved ){
 	return finalPageHTML;
 }
 
-function handleResponse(res, location, loginSuccess) {
+function loginRedirect(res, location, loginSuccess) {
 	if(loginSuccess){
 		res.redirect(location)
 	}else{
@@ -115,10 +124,16 @@ function authenticateUser(req, res, next){
 		if(data){
 			//response has sent back data
 			//TODO compare password login
-				req.session.username = data.login
-				console.log(req.session)
-				res.Authenticated = true; 
-				next()
+			bcrypt.compare(req.body.password, data.password, function(err, isMatch) {
+				if(isMatch){
+					req.session.username = data.login
+					res.Authenticated = true; 
+					next()
+				}else{
+					//no password
+					res.Authenticated = false;
+				}
+			});
 		}else{
 			//no user found		
 			res.Authenticated = false;
@@ -138,12 +153,10 @@ function addToCart(req, res, next){
 			console.log("NO ITEM FOUND")
 			next();
 		}
-		
 	})
-	
 }
 
-function updateCart(req, res, next){
+function applySessionVariables(req, res, next){
 	
 	if(req.session.cart == null){req.session.cart = {}; req.session.cart.products = [] }
 	brandingData['cartQty'] = req.session.cart.products.length;
