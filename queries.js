@@ -63,12 +63,12 @@ module.getProductById = function (id, next) {
 }
 module.registerUser = function (userValues, req, res, next){
 
-  var queryString= 'INSERT INTO users(login, password) VALUES($1, $2)';
-  //validates values on client side
-
+  let queryString= 'INSERT INTO users(login, password) VALUES($1, $2)';
+ 
   db.query(queryString, userValues)
   .then(res =>{res.userCreated=true; next()})
   .catch(e => {
+	  //TODO this is if the user already exists... might want to check in a seperate query
 	  if(e.code == 23505){
 		  console.log("handle duplicate user")
 		  res.userCreated = false;
@@ -77,26 +77,14 @@ module.registerUser = function (userValues, req, res, next){
 	  next(e)
 	  })  
 }
-	
-module.loginAuth = function (req, res, next){
-	var userData = req.body;
-	db.any('select * from users WHERE login = \'' + req.body.username+ "\'").then(function (data) {
-			if(data === undefined || data.length == 0){
-				res.Authenticated = false; 
-				next()}
-				else if(data[0].password == userData.password){
-				res.Authenticated = true; 
-				next()}
-				else{
-				res.Authenticated = false; next();
-				}
-		})  .catch(function (err) {
-      return next(err);
-    });
-	//#TODO passwords should be encrypted switch to passport
-	//db.any('select * from user WHERE password = '+ dbPassword )
-}
 
+module.saveUserCart = function(userName, cart){
+	let queryString = 'UPDATE users SET cart = $1 WHERE login = $2';
+	let queryValues = [cart, userName]
+	db.any(queryString, queryValues).then().catch(e => {})
+	
+}
+	
 module.findUser = function(username, callbackFunction){
 	db.any('select * from users WHERE login = \'' + username+ "\'").then(function (data) {
 			if(data === undefined || data.length == 0){

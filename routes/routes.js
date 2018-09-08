@@ -28,6 +28,7 @@ router.get('/ProductView.html', (req, res) => {
 	})
 	
 router.get('/logout', (req, res) => {
+		db.saveUserCart('user', req.session.cart)
 	endSession(req, res);
 	})
 	
@@ -54,8 +55,6 @@ router.post("/removeProduct", (req, res) =>{
 })
 
 router.get("/viewCart.html", (req, res) =>{
-	console.log("now redirected to viewcart  current session:")
-	console.log(req.session)
 	if(req.session.cart == null) req.session.cart = {};	
 	res.send(renderPage('./cart.html', brandingData, req.session.cart))
 })
@@ -64,7 +63,6 @@ router.get("/viewCart.html", (req, res) =>{
 router.use('/login', authenticateUser);
 router.post('/login', (req,res) => {
 	if(res.Authenticated){
-
 		brandingData['Login'] = req.body.username;
 		loginRedirect(res, url.parse(req.body.currentUrl).path, true);
 	}else{
@@ -127,10 +125,14 @@ function authenticateUser(req, res, next){
 			bcrypt.compare(req.body.password, data.password, function(err, isMatch) {
 				if(isMatch){
 					req.session.username = data.login
+					req.session.isAuth = true;
+					console.log("parsing string")
+					console.log(data.cart)
+					req.session.cart = JSON.parse(data.cart)
 					res.Authenticated = true; 
 					next()
 				}else{
-					//no password
+					//no password match
 					res.Authenticated = false;
 				}
 			});
@@ -156,11 +158,14 @@ function addToCart(req, res, next){
 	})
 }
 
+
 function applySessionVariables(req, res, next){
-	
+
 	if(req.session.cart == null){req.session.cart = {}; req.session.cart.products = [] }
 	brandingData['cartQty'] = req.session.cart.products.length;
 	console.log(req.session.id)
+	console.log(req.session.cart)
+	
 	
 	next();
 }
