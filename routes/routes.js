@@ -7,12 +7,12 @@ const url = require('url')
 bodyParser = require("body-parser");
 var cart = require("../lib/shoppingCart")
 var bcrypt = require('bcrypt')
+
 module.exports = function(db){
-	
 	
 router.use(express.static("public"));
 router.use(bodyParser.urlencoded({ extended: true }));
-router.use('/*', applySessionVariables)
+router.use('*', applySessionVariables)
 
 router.use("/", db.getFeaturedProducts);								
 router.get('/', (req, res) => {
@@ -20,7 +20,6 @@ router.get('/', (req, res) => {
 		}
 	)
 
-//TODO add middleware to send database request	
 router.use("/ProductView.html", db.getProductData);
 router.get('/ProductView.html', (req, res) => {
 	
@@ -28,7 +27,7 @@ router.get('/ProductView.html', (req, res) => {
 	})
 	
 router.get('/logout', (req, res) => {
-		db.saveUserCart('user', req.session.cart)
+	db.saveUserCart(req.session.userName, req.session.cart)
 	endSession(req, res);
 	})
 	
@@ -50,7 +49,9 @@ router.post("/addToCart", (req, res) =>{
 router.post("/removeProduct", (req, res) =>{
 		
 		cart.removeFromCart(req.body.id, cart, req.session.cart.products)
-		cart.saveCart(req, function(){res.redirect("/viewCart.html")})
+		cart.saveCart(req, function(){	
+			db.saveUserCart(req.session.userName, req.session.cart)
+			res.redirect("/viewCart.html")})
 	
 })
 
@@ -112,7 +113,6 @@ function loginRedirect(res, location, loginSuccess) {
 }
 
 function endSession(req, res){
-	brandingData['Login'] = 'login';
 	req.session.regenerate(function(err){res.redirect('/')});
 }
 
@@ -121,19 +121,17 @@ function authenticateUser(req, res, next){
 		//Authentication logic will go here
 		if(data){
 			//response has sent back data
-			//TODO compare password login
 			bcrypt.compare(req.body.password, data.password, function(err, isMatch) {
 				if(isMatch){
-					req.session.username = data.login
+					req.session.userName = data.login
 					req.session.isAuth = true;
-					console.log("parsing string")
-					console.log(data.cart)
 					req.session.cart = JSON.parse(data.cart)
 					res.Authenticated = true; 
 					next()
 				}else{
 					//no password match
 					res.Authenticated = false;
+					next();
 				}
 			});
 		}else{
@@ -158,18 +156,28 @@ function addToCart(req, res, next){
 	})
 }
 
-
 function applySessionVariables(req, res, next){
-
-	if(req.session.cart == null){req.session.cart = {}; req.session.cart.products = [] }
+	console.log("applying session variables")
+	//setUserCart(req, res);
+	if(req.session.cart == null){
+		req.session.cart = {}; 
+		req.session.cart.products = []
+	}
 	brandingData['cartQty'] = req.session.cart.products.length;
-	console.log(req.session.id)
-	console.log(req.session.cart)
-	
-	
+	brandingData['Login'] = req.session.userName ? req.session.userName: 'login';
+
 	next();
+}
+
+function setUserCart(req, res){
+	console.log(req.session.userName)
+	if(req.session.userName){
+		db.getUserCart(req, res, function(userCart){	
+		console.log("setting cart")
+		console.log(userCart)
+			req.session.cart = userCart;
+		})
+	}	
 }
 	return router;
 }
-
-

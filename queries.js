@@ -81,6 +81,7 @@ module.registerUser = function (userValues, req, res, next){
 module.saveUserCart = function(userName, cart){
 	let queryString = 'UPDATE users SET cart = $1 WHERE login = $2';
 	let queryValues = [cart, userName]
+	console.log("SAVING USER CART")
 	db.any(queryString, queryValues).then().catch(e => {})
 	
 }
@@ -96,7 +97,15 @@ module.findUser = function(username, callbackFunction){
 		})  .catch(function (err) {
       return callbackFunction(err, null);
     });
-	
+}
+
+module.getUserCart = function(req, res, next){
+	let queryString = 'select * from users WHERE login = $1';
+	let queryValues = [req.session.userName]
+	db.query(queryString, queryValues).then( function(data){
+		next(JSON.parse(data[0].cart))
+	})
+	.catch(e => {})
 }
 
 module.getFeaturedProducts = function (req, res, next) {
@@ -104,7 +113,7 @@ module.getFeaturedProducts = function (req, res, next) {
 	db.any('select * from products')
     .then(function (data) {
       res.data = data;
-	  next();
+	  next(data.cart);
     })
     .catch(function (err) {
       return next(err);
