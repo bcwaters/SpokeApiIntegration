@@ -95,6 +95,7 @@ function renderPage(templateURI, currentJSON, JSON_retrieved ){
 	var template = fs.readFileSync(templateURI, "utf8");
 	var data = currentJSON;
 	for(var key in JSON_retrieved){
+		console.log(key + " : " + data[key])
 			data[key] = JSON_retrieved[key]
 	}
 	

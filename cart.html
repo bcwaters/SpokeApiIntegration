@@ -16,12 +16,19 @@
 
 <div class="container-fluid border shadow fluid py-0" style="background-color: white; padding:0px;" >
 {{> navbar}}  
-
-</div>
-	<div class="row preview-card-row">
-	{{#each this}}
-		{{> cartProduct }}
-	{{/each}}
+<div class="container">
+	<div class="row">
+		<div class="col-md-9 preview-card-row">
+		{{#each this}}
+		{{#if_eq @key 'products'}}
+			{{> cartProduct }}
+		{{/if_eq}}
+		{{/each}}
+		</div>
+	
+		<div class="col checkout-row">
+			checkout goes here<br>items:{{itemCount}}<br>total: ${{cartTotal}}<br>BUYNOWSTRIPE button
+		</div>
 	</div>
 </div>
 {{> footer}}

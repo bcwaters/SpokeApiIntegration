@@ -222,6 +222,11 @@
 		margin-right:auto;
 	}
 	
+	.row.cart-item-header{
+		 color: black;
+		 font-size:30px;
+	}
+	
 	.shoppingCartIcon{
 		margin-right:15px;
 		position: relative;
@@ -237,7 +242,34 @@
     padding:2px 4px;
     font-size:10px;
 }
-	
+	a.list-group-item {
+	margin:5px;
+    max-height:150px;
+	width:100%;
+	display:inline;
+}
+
+a.list-group-item.row{
+	max-height: 100%;
+	margin:5px;
+}
+
+.cart-row{
+	height:100%;
+}
+
+.cart-title{
+	font-size:20px;
+}
+.cart-item-col{
+	color: black;
+	text-align: center;
+}
+
+.cart-image{
+	height:120px;
+	width: 120px;
+}
 	.custom-file-input ~ .custom-file-label::after {
     content: "";
 }
