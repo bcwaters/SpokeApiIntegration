@@ -1,0 +1,26 @@
+<div class="container">
+	
+	  <div class="card" >
+		<div class="card-header" >Order Summary </div>
+		<div class="card-body">
+			<div class="row content">
+					<div class = "col"><span class="checkout-label">items({{itemCount}})</span></div>
+			</div>
+			<div class="row content">
+				<div class = "col"><span class="checkout-label">Shipping</span></div>
+				<div class = "col"><span class="checkout-price ">Free</span></div>
+			</div>
+				<div class="row checkoutTotal">
+					<div class = "col"><span class="checkout-label">Total:</span></div>
+					<div class = "col"><span class="checkout-price ">${{cartTotal}}</span></div>
+			 </div>
+			<div class="row content">
+					<div class="col-sm">
+					<input type="hidden" id="id" name="id" value={{id}}>
+					<input href="checkout" name="checkout" value="Checkout" type="submit"  class="btn btn-success checkoutButton justify-content-center"></a>
+				</div>
+			</div>
+		</div>
+      </div>
+	  
+</div>

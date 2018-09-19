@@ -6,26 +6,28 @@
 {{#each this}}
 		  <a href="#" class="list-group-item">	
 			<div class='row cart-row'>
-				<div class="media col-md-2">
+				<div class="media col-md-3">
                     <div class="pull-left cart-image">
                         <img class="cart-image"  src={{image}}>
                     </div>
                 </div>
 				 <div class="col-md-2 cart-item-col">
-                 <div class="cart-title"> {{title}}</div> 
+					<div class="cart-title"> {{title}}</div> 
                 </div>
 				<div class="col-sm-2 cart-item-col">
-					qty: <span class="qty">{{qty}}</span>
+					 <div class="cart-qty">qty:{{qty}}</div>
 				</div>
 				<div class="col-sm-2 cart-item-col ">
-					price: <span class="price">{{price}}</span>
+					<div class= "cart-price">price:{{price}}</div>
 				</div>
-				<div class="col-md-4 pull-right ">
+				<div class="col-sm-3 pull-right ">
+					<div class="cart-button">
 					<form method="post" action="removeProduct" class="inline">
 						<input type="hidden" name="id" value={{id}}>
-						<button type="submit" name="removeProduct" value="removeProduct" class="link-button"> Remove
+						<button type="submit" name="removeProduct" value="removeProduct" class="btn cart-button"> Remove
 						</button>
 					</form>
+					</div>
 				</div>
 				</div>
 		</a>
