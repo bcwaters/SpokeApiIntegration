@@ -1,40 +1,43 @@
 
-<div class="container">
+
 	
         <div class="list-group">
 {{#if_eq @key 'products'}}
 {{#each this}}
 		  <a href="#" class="list-group-item">	
 			<div class='row cart-row'>
-				<div class="media col-md-3">
+				<div class="cart-image col-md-3">
                     <div class="pull-left cart-image">
                         <img class="cart-image"  src={{image}}>
                     </div>
                 </div>
-				 <div class="col-md-2 cart-item-col">
-					<div class="cart-title"> {{title}}</div> 
-                </div>
-				<div class="col-sm-2 cart-item-col">
-					 <div class="cart-qty">qty:{{qty}}</div>
-				</div>
-				<div class="col-sm-2 cart-item-col ">
-					<div class= "cart-price">price:{{price}}</div>
-				</div>
-				<div class="col-sm-3 pull-right ">
-					<div class="cart-button">
+
+				<div class="col-md-2 cart-item-col">
+					<div class="container">
+						<div class="row">
+							<div class="cart-title"> {{title}}</div> 
+						</div>
+						<div class="row">
 					<form method="post" action="removeProduct" class="inline">
 						<input type="hidden" name="id" value={{id}}>
-						<button type="submit" name="removeProduct" value="removeProduct" class="btn cart-button"> Remove
+						<button type="submit" name="removeProduct" value="removeProduct" class="btn btn-sm cart-button"> Remove
 						</button>
 					</form>
+					
+						</div>
 					</div>
 				</div>
+				<div class="col-sm-3 cart-item-col">
+					 <div class="cart-qty">{{qty}}</div>
+				</div>
+				<div class="col-sm-3 cart-item-col ">
+					<div class= "cart-price">{{price}}</div>
+				</div>
+				
 				</div>
 		</a>
 {{/each}}
 {{/if_eq}}
 		</div>
-	
-</div>
 
  

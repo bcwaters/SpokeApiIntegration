@@ -18,18 +18,44 @@
 {{> navbar}}  
 <div class="container-fluid">
 	<div class="row justify-content-center">
+	{{#if_not itemCount 0}}
 		<div class="col-md-6 preview-card-row ">
+	
+		<div class="container">
+		<div class='row cart-row'>
+				
+
+				<div class="col-md-3 product-row-label">
+					Product
+				</div>
+				<div class="col-md-2">
+				</div>
+				<div class="col-sm-3 cart-item-col product-row-label">
+					 <div>Quanity</div>
+				</div>
+				<div class="col-sm-3 cart-item-col product-row-label ">
+					<div >Price</div>
+				</div>
+				
+				</div>
+		
 		{{#each this}}
 		{{#if_eq @key 'products'}}
 			{{> cartProduct }}
 		{{/if_eq}}
 		{{/each}}
 		</div>
+		</div>
 	
 		<div class="col-md-3 checkout-row">
 		
 			{{>checkoutView}}
 		</div>
+		{{/if_not}}
+		
+		{{#if_eq itemCount 0}}
+		Shopping cart is empty (add a container to fix footer movement)
+		{{/if_eq}}
 	</div>
 </div>
 {{> footer}}
